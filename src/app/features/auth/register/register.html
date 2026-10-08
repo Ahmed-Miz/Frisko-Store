@@ -1,0 +1,169 @@
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <!-- الهيدر أو اللوجو فوق الفورم -->
+  <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
+    <a routerLink="/shop" class="inline-flex items-center space-x-2 rtl:space-x-reverse mb-2">
+      <div
+        class="w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold shadow-md"
+      >
+        <img src="/WhatsApp Image 2026-09-25 at 1.36.47 PM.jpeg" class="w-12 rounded-2xl" />
+      </div>
+    </a>
+    <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Create an Account</h2>
+    <p class="mt-2 text-sm text-gray-600">Join Frisko and discover the latest trends</p>
+  </div>
+
+  <!-- صندوق الفورم -->
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10 border border-gray-100">
+      <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="space-y-5">
+        <!-- الاسم بالكامل -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Full Name</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+            >
+              <i class="fa-solid fa-user"></i>
+            </div>
+            <input
+              formControlName="name"
+              type="text"
+              required
+              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
+              placeholder="John Doe"
+            />
+          </div>
+          @if (registerForm.get('name')?.touched && registerForm.get('name')?.invalid) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (registerForm.get('name')?.hasError('required')) {
+                <span>Name is required.</span>
+              }
+              @if (registerForm.get('name')?.hasError('minlength')) {
+                <span>Name must be at least 3 characters long.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- البريد الإلكتروني -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Email address</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+            >
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <input
+              formControlName="email"
+              type="email"
+              required
+              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
+              placeholder="name@example.com"
+            />
+          </div>
+          @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (registerForm.get('email')?.hasError('required')) {
+                <span>Email is required.</span>
+              }
+              @if (registerForm.get('email')?.hasError('email')) {
+                <span>Please enter a valid email address.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- كلمة المرور -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Password</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+            >
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <input
+              formControlName="password"
+              type="password"
+              required
+              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
+              placeholder="••••••••"
+            />
+          </div>
+          @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
+            <div
+              class="bg-red-50 border border-red-200 p-3 rounded text-red-700 text-sm mt-2 space-y-1"
+            >
+              <p class="font-bold">Ensure that these requirements are met:</p>
+              <ul class="list-disc list-inside space-y-0.5">
+                <li
+                  [class.text-green-600]="
+                    !registerForm.get('password')?.hasError('minlength') &&
+                    !registerForm.get('password')?.hasError('maxlength')
+                  "
+                >
+                  At least 10 characters (and up to 100 characters)
+                </li>
+                <li [class.text-green-600]="!registerForm.get('password')?.hasError('pattern')">
+                  At least one lowercase character
+                </li>
+                <li [class.text-green-600]="!registerForm.get('password')?.hasError('pattern')">
+                  Inclusion of at least one special character, e.g., ! @ # ?
+                </li>
+              </ul>
+            </div>
+          }
+        </div>
+
+        <!-- phone-->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Phone Namber</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+            >
+              <i class="fa-solid fa-phone"></i>
+            </div>
+            <input
+              formControlName="phone"
+              type="tel"
+              required
+              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
+              placeholder="Phon Namber"
+            />
+          </div>
+          @if (registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (registerForm.get('phone')?.hasError('pattern')) {
+                <span>Please enter a valid phone number.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- زر التسجيل -->
+        <div class="pt-2">
+          <button
+            type="submit"
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200"
+          >
+            Sign Up
+          </button>
+        </div>
+      </form>
+
+      <!-- الانتقال لصفحة تسجيل الدخول لو عنده حساب مسبقاً -->
+      <div class="mt-6 text-center">
+        <p class="text-sm text-gray-600">
+          Already have an account?
+          <a
+            routerLink="/auth/login"
+            class="cursor-pointer font-bold text-green-600 hover:text-green-500 ml-1"
+            >Sign In</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

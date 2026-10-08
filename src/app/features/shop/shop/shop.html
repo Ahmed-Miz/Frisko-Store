@@ -1,0 +1,51 @@
+<!-- Banner / Hero Section فوق المنتجات -->
+<div class="bg-gray-50 min-h-screen pb-16">
+  <div
+    class="bg-gradient-to-r from-green-700 to-green-500 rounded-2xl mx-4 my-6 p-6 md:p-10 text-white shadow-md flex flex-col md:flex-row items-center justify-between"
+  >
+    <!-- النص والعنوان -->
+    <div class="mb-4 md:mb-0 text-center md:text-left">
+      <span
+        class="bg-white/20 text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider"
+      >
+        Welcome to Frisko Store
+      </span>
+      <h1 class="text-2xl md:text-4xl font-extrabold mt-2 tracking-tight">
+        Explore Our Exclusive Collection
+      </h1>
+      <p class="text-green-100 text-sm md:text-base mt-2 max-w-xl">
+        Discover the latest trends, daily arrivals, and best deals tailored just for you. Quality
+        products at unbeatable prices!
+      </p>
+    </div>
+
+    <!-- صورة أو أيقونة تعبيرية تظهر في الديسكتوب -->
+    <div
+      class="hidden md:flex items-center justify-center bg-white/10 p-5 rounded-2xl backdrop-blur-sm"
+    >
+      <i class="fa-solid fa-bag-shopping text-6xl text-white/90"></i>
+    </div>
+  </div>
+
+  <!-- شريط الفلترة أو مسار التنقل السريع (اختياري تحت البانر مباشرة) -->
+  <div class="mx-4 mb-6 flex flex-wrap items-center justify-between gap-4 border-b pb-4">
+    <div class="flex items-center space-x-2 text-sm text-gray-600 rtl:space-x-reverse">
+      <span class="font-medium text-gray-800">Trending Products</span>
+      <span>/</span>
+      <span class="text-green-600 font-semibold">All Items</span>
+    </div>
+
+    <!-- زر ترتيب أو فلترة سريع -->
+    <div class="flex items-center gap-2">
+      <select
+        class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-green-500"
+      >
+        <option value="latest">Sort by: Latest</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+      </select>
+    </div>
+  </div>
+
+  <app-product-details></app-product-details>
+</div>

@@ -1,0 +1,165 @@
+<div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+  <!-- heedar and logo-->
+  <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
+    <a routerLink="/shop" class="inline-flex items-center space-x-2 rtl:space-x-reverse mb-2">
+      <div
+        class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-md"
+      >
+        <img src="/WhatsApp Image 2026-09-25 at 1.36.47 PM.jpeg" class="rounded-2xl" />
+      </div>
+    </a>
+    <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Welcome to Frisko</h2>
+    <p class="mt-2 text-sm text-gray-600">
+      Or
+      <a routerLink="/shop" class="font-medium text-green-600 hover:text-green-500"
+        >back to store shopping</a
+      >
+    </p>
+  </div>
+
+  <!-- Form -->
+  <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-4 shadow-xl sm:rounded-2xl sm:px-10 border border-gray-100">
+      <form [formGroup]="loginForm" class="space-y-6" (ngSubmit)="submitForm()">
+        <!-- Input email-->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Email address</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+            >
+              <i class="fa-solid fa-envelope"></i>
+            </div>
+            <input
+              formControlName="email"
+              type="email"
+              required
+              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
+              placeholder="name@example.com"
+            />
+          </div>
+          @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (loginForm.get('email')?.hasError('required')) {
+                <span>Email is required.</span>
+              }
+              @if (loginForm.get('email')?.hasError('email')) {
+                <span>Please enter a valid email address.</span>
+              }
+            </div>
+          }
+        </div>
+
+        <!-- Input password -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Password</label>
+          <div class="mt-1 relative rounded-md shadow-sm">
+            <div
+              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+            >
+              <i class="fa-solid fa-lock"></i>
+            </div>
+            <input
+              formControlName="password"
+              type="password"
+              required
+              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
+              placeholder="••••••••"
+            />
+          </div>
+          @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+            <div
+              class="bg-red-50 border border-red-200 p-3 rounded text-red-700 text-sm mt-2 space-y-1"
+            >
+              <p class="font-bold">Ensure that these requirements are met:</p>
+              <ul class="list-disc list-inside space-y-0.5">
+                <li
+                  [class.text-green-600]="
+                    !loginForm.get('password')?.hasError('minlength') &&
+                    !loginForm.get('password')?.hasError('maxlength')
+                  "
+                >
+                  At least 10 characters (and up to 100 characters)
+                </li>
+                <li [class.text-green-600]="!loginForm.get('password')?.hasError('pattern')">
+                  At least one lowercase character
+                </li>
+                <li [class.text-green-600]="!loginForm.get('password')?.hasError('pattern')">
+                  Inclusion of at least one special character, e.g., ! @ # ?
+                </li>
+              </ul>
+            </div>
+          }
+        </div>
+
+        <!-- Forgot password-->
+        <div class="flex items-center justify-between text-sm">
+          <div class="flex items-center">
+            <input
+              id="remember-me"
+              type="checkbox"
+              class="h-4 w-4 text-green-600 focus:ring-green-550 border-gray-300 rounded"
+            />
+            <label for="remember-me" class="ml-2 block text-gray-900">Remember me</label>
+          </div>
+          <div class="text-sm">
+            <a href="#" class="font-medium text-green-600 hover:text-green-500"
+              >Forgot your password?</a
+            >
+          </div>
+        </div>
+
+        <!-- button Sign in-->
+        <div>
+          <button
+            type="submit"
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200"
+          >
+            Sign In
+          </button>
+        </div>
+      </form>
+
+      <!-- Sign in Social -->
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-200"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-white text-gray-500">Or continue with</span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            class="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition"
+          >
+            <i class="fa-brands fa-google text-red-500 text-lg"></i>
+            <span class="ml-2">Google</span>
+          </button>
+          <button
+            type="button"
+            class="w-full inline-flex justify-center py-2.5 px-4 border border-gray-300 rounded-xl shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition"
+          >
+            <i class="fa-brands fa-facebook text-blue-600 text-lg"></i>
+            <span class="ml-2">Facebook</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- (Register) -->
+      <div class="mt-6 text-center">
+        <p class="text-sm text-gray-600">
+          Don't have an account?
+          <a
+            routerLink="/auth/register"
+            class="cursor-pointer font-bold text-green-600 hover:text-green-500 ml-1"
+            >Create account</a
+          >
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,113 @@
+<app-slider></app-slider>
+
+<div class="bg-gray-50 min-h-screen pb-16">
+  <!-- 1.(Categories Circles  -->
+  <div class="max-w-screen-xl mx-auto px-4 py-6">
+    <h2 class="text-xl font-bold text-gray-800 mb-4">Shop By Categories</h2>
+    <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center">
+      @for (categorie of categories(); track categorie.id) {
+        <a routerLink="/shop/hoodies" class="group flex flex-col items-center">
+          <div
+            class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-green-100 flex items-center justify-center overflow-hidden border-2 border-transparent group-hover:border-green-600 transition shadow-sm"
+          >
+            <img [src]="categorie.image" class="w-full" />
+          </div>
+          <span class="mt-2 text-sm font-semibold text-gray-700 group-hover:text-green-600"
+            >{{ categorie.name }} 🔥</span
+          >
+        </a>
+      }
+    </div>
+  </div>
+
+  <!-- 2. بانر التخفيضات السريع (Flash Sale Banner) -->
+  <div class="max-w-screen-xl mx-auto px-4 my-6">
+    <div
+      class="bg-gradient-to-r from-gray-900 via-gray-800 to-green-900 rounded-2xl p-6 md:p-10 text-white flex flex-col md:flex-row justify-between items-center shadow-lg"
+    >
+      <div class="mb-4 md:mb-0 text-center md:text-left">
+        <span class="bg-green-500 text-xs uppercase px-3 py-1 rounded-full font-bold"
+          >Limited Time</span
+        >
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-2">Super Winter Hoodies Sale</h2>
+        <p class="text-gray-300 text-sm mt-1">
+          Get up to 50% off on all trending oversized hoodies.
+        </p>
+      </div>
+      <a
+        routerLink="/shop/hoodies"
+        class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-full shadow transition transform hover:scale-105"
+      >
+        Shop Now
+      </a>
+    </div>
+  </div>
+  <div class="max-w-screen-xl mx-auto px-4 mt-10">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800 border-l-4 border-green-600 pl-3">
+        Trending Products
+      </h2>
+      <a routerLink="/shop" class="text-green-600 hover:underline font-semibold text-sm"
+        >View All &rarr;</a
+      >
+    </div>
+
+    <!-- شبكة المنتجات -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+      <!-- كارت منتج تجريبي (@for) -->
+      @for (latestProduct of latestProducts(); track latestProduct.id) {
+        <div
+          class="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition group"
+        >
+          <!-- صورة المنتج مع زر المفضلة -->
+          <div class="relative bg-gray-100 aspect-[3/4] overflow-hidden">
+            <img
+              [src]="latestProduct.primary_image"
+              [alt]="latestProduct.title"
+              class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+            />
+            @if (isNewProduct(latestProduct.created_at)) {
+              <span
+                class="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded"
+                >{{ latestProduct.badge_label }}</span
+              >
+            }
+            <!-- <span
+               class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded"
+               >-30%</span
+             > -->
+            <button
+              class="absolute top-2 right-2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-700 hover:text-red-500 transition shadow"
+            >
+              <i class="fa-regular fa-heart"></i>
+            </button>
+          </div>
+          <!-- تفاصيل المنتج -->
+          <div class="p-4">
+            <span class="text-xs text-gray-400 block mb-1">{{ latestProduct.title }}</span>
+            <h3 class="text-sm font-medium text-gray-800 truncate">
+              {{ latestProduct.description }}
+            </h3>
+            <div class="flex items-center justify-between mt-3">
+              <div>
+                <span class="text-green-600 font-bold text-base"
+                  ><span class="text-2xs">TRY</span> {{ latestProduct.price }}</span
+                >
+                <span class="text-gray-400 text-xs line-through ml-2"
+                  ><span class="text-2xs">TRY</span> {{ latestProduct.old_price }}</span
+                >
+              </div>
+              <button
+                (click)="addToCart(latestProduct.id, latestProduct.reviews_count)"
+                class="w-9 h-9 bg-gray-900 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition"
+              >
+                <i class="fa-solid fa-plus text-xs"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+      <!-- نهاية كارت المنتج -->
+    </div>
+  </div>
+</div>
