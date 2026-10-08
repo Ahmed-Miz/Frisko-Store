@@ -53,53 +53,57 @@
     </div>
 
     <!-- شبكة المنتجات -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-      <!-- كارت منتج تجريبي (@for) -->
-      @for (latestProduct of latestProducts(); track latestProduct.id) {
+    <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+      @for (product of latestProducts(); track product.id) {
         <div
-          class="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition group"
+          class="bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition group flex flex-col justify-between"
         >
           <!-- صورة المنتج مع زر المفضلة -->
-          <div class="relative bg-gray-100 aspect-[3/4] overflow-hidden">
+          <div class="relative bg-gray-100 w-full h-48 sm:h-64 overflow-hidden">
             <img
-              [src]="latestProduct.primary_image"
-              [alt]="latestProduct.title"
+              [src]="product.primary_image"
+              [alt]="product.title"
               class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
             />
-            @if (isNewProduct(latestProduct.created_at)) {
+            @if (isNewProduct(product.created_at)) {
               <span
-                class="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded"
-                >{{ latestProduct.badge_label }}</span
+                class="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow"
               >
+                {{ product.badge_label }}
+              </span>
             }
-            <!-- <span
-               class="absolute top-2 left-2 bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded"
-               >-30%</span
-             > -->
             <button
-              class="absolute top-2 right-2 w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-700 hover:text-red-500 transition shadow"
+              class="absolute top-2 right-2 w-7 h-7 sm:w-8 sm:h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-700 hover:text-red-500 transition shadow"
             >
-              <i class="fa-regular fa-heart"></i>
+              <i class="fa-regular fa-heart text-xs sm:text-sm"></i>
             </button>
           </div>
+
           <!-- تفاصيل المنتج -->
-          <div class="p-4">
-            <span class="text-xs text-gray-400 block mb-1">{{ latestProduct.title }}</span>
-            <h3 class="text-sm font-medium text-gray-800 truncate">
-              {{ latestProduct.description }}
-            </h3>
-            <div class="flex items-center justify-between mt-3">
+          <div class="p-3 sm:p-4 flex flex-col flex-grow justify-between">
+            <div>
+              <span class="text-[11px] sm:text-xs text-gray-400 block mb-1 truncate">{{
+                product.title
+              }}</span>
+              <h3 class="text-xs sm:text-sm font-medium text-gray-800 line-clamp-2">
+                {{ product.description }}
+              </h3>
+            </div>
+
+            <div class="flex items-center justify-between mt-3 pt-2 border-t border-gray-50">
               <div>
-                <span class="text-green-600 font-bold text-base"
-                  ><span class="text-2xs">TRY</span> {{ latestProduct.price }}</span
-                >
-                <span class="text-gray-400 text-xs line-through ml-2"
-                  ><span class="text-2xs">TRY</span> {{ latestProduct.old_price }}</span
-                >
+                <span class="text-green-600 font-bold text-sm sm:text-base block">
+                  <span class="text-[10px]">TRY</span> {{ product.price }}
+                </span>
+                @if (product.old_price) {
+                  <span class="text-gray-400 text-[11px] sm:text-xs line-through">
+                    <span class="text-[9px]">TRY</span> {{ product.old_price }}
+                  </span>
+                }
               </div>
               <button
-                (click)="addToCart(latestProduct.id, latestProduct.reviews_count)"
-                class="w-9 h-9 bg-gray-900 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition"
+                (click)="addToCart(product.id, product.reviews_count)"
+                class="w-8 h-8 sm:w-9 sm:h-9 bg-gray-900 hover:bg-green-600 text-white rounded-full flex items-center justify-center transition shadow-sm shrink-0"
               >
                 <i class="fa-solid fa-plus text-xs"></i>
               </button>
@@ -107,7 +111,6 @@
           </div>
         </div>
       }
-      <!-- نهاية كارت المنتج -->
     </div>
   </div>
 </div>
