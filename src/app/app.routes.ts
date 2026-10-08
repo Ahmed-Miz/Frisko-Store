@@ -1,3 +1,4 @@
+import { RenderMode } from '@angular/ssr';
 import { Routes } from '@angular/router';
 import { ProductDetails } from './features/product-details/product-details';
 import { Cart } from './features/cart/cart/cart';
