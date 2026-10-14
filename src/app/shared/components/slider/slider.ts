@@ -25,9 +25,11 @@ export class Slider implements OnInit {
     effect(() => {
       const slides = this.heroSlids();
       if (slides.length > 0) {
-        setTimeout(() => {
-          initFlowbite();
-        }, 800);
+        if (isPlatformBrowser(this.pLATFORM_ID)) {
+          setTimeout(() => {
+            initFlowbite();
+          }, 200);
+        }
       }
     });
   }

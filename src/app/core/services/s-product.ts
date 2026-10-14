@@ -1,18 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class Product {
+export class SProduct {
   private readonly http = inject(HttpClient);
 
   getProduct(filters?: any): Observable<any> {
     let params = new HttpParams();
 
-    // لو مبعوث فلترز، بنحطها في الـ params
+    //params
     if (filters) {
       Object.keys(filters).forEach((key) => {
         if (filters[key] !== null && filters[key] !== undefined && filters[key] !== '') {
@@ -21,7 +21,11 @@ export class Product {
       });
     }
 
-    // بنبعت الـ params مع الـ GET request
-    return this.http.get(environment.baseUrl + '/api/v1/products', { params });
+    // params with GET request
+    return this.http.get(environment.baseUrl + `/api/v1/products`, { params });
+  }
+
+  getProductDetails(id: string | number): Observable<any> {
+    return this.http.get(environment.baseUrl + `/api/v1/products/${id}`);
   }
 }

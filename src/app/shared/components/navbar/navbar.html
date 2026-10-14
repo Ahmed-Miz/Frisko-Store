@@ -1,10 +1,8 @@
 <!-- 1.(Top Bar) -->
-<div
-  class="hidden md:block bg-gray-100 text-gray-600 text-xs py-1 md:py-2 px-4 border-b border-gray-200"
->
+<div class="bg-gray-100 text-gray-600 text-xs py-1 md:py-2 px-4 border-b border-gray-200">
   <div class="max-w-screen-xl mx-auto flex flex-wrap justify-between items-center">
     <!-- اليسار: مميزات المتجر -->
-    <div class="flex items-center space-x-6 rtl:space-x-reverse">
+    <div class="hidden md:flex mt-2.5 md:mt-0 flex items-center space-x-6 rtl:space-x-reverse">
       <span class="flex items-center">
         <i class="fa-solid fa-truck-fast text-green-600 mr-2"></i> Free Shipping on Orders 500 EGP
       </span>
@@ -17,11 +15,11 @@
     <div class="md:flex md:items-center md:space-x-4 rtl:space-x-reverse">
       <div class="flex justify-between items-center space-x-3 rtl:space-x-reverse">
         <a href="tel:+18001234567" class="hover:text-green-600 flex items-center">
-          <i class="fa-solid fa-phone mr-1"></i> +1 (800) 123-4567
+          <i class="fa-solid fa-phone mr-1"></i> (+90) 00905522267204
         </a>
         <span class="text-gray-300">|</span>
-        <a href="mailto:support@freshcart.com" class="hover:text-green-600 flex items-center">
-          <i class="fa-regular fa-envelope mr-1"></i> support&#64;freshcart.com
+        <a href="mailto:friskofashion@gmail.com" class="hover:text-green-600 flex items-center">
+          <i class="fa-regular fa-envelope mr-1"></i> friskofashion@gmail.com
         </a>
       </div>
     </div>
@@ -48,11 +46,11 @@
         <!-- أيقونة السلة للموبايل -->
         <a routerLink="/cart" class="text-gray-700 hover:text-green-600 text-lg relative p-2">
           <i class="fa-solid fa-cart-shopping"></i>
-          <span
+          <!-- <span
             class="absolute top-0 right-0 bg-green-600 text-white text-[9px] font-bold rounded-full h-4 w-4 flex items-center justify-center"
           >
-            {{ cartCount }}
-          </span>
+            {{ cartCount() }}
+          </span> -->
         </a>
 
         <!-- زرار التوجيل (القائمة المنسدلة) -->
@@ -177,11 +175,11 @@
             class="hidden md:flex text-gray-700 hover:text-green-600 text-xl relative p-1"
           >
             <i class="fa-solid fa-cart-shopping"></i>
-            <span
+            <!-- <span
               class="absolute -top-1 -right-1 bg-green-600 text-white text-[10px] font-bold rounded-full h-4 w-4 flex items-center justify-center"
             >
               {{ cartCount }}
-            </span>
+            </span> -->
           </a>
 
           <!-- زر تسجيل الدخول / الخروج -->

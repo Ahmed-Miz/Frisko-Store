@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { Component, computed, inject, OnDestroy, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { Scart } from '../../../core/services/scart';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -36,6 +36,36 @@ export class Cart implements OnInit {
     console.log(this.cartId());
   }
 
+  // دالة مساعدة للحفظ والتحديث الفوري
+  private saveAndSync(items: any[]): void {
+    localStorage.setItem('localCart', JSON.stringify(items));
+    this.cartItems.set([...items]);
+  }
+
+  // زيادة الكمية داخل صفحة السلة باستخدام الـ ID
+  increaseQuantity(productId: any): void {
+    const items = [...this.cartItems()];
+    const item = items.find((p: any) => p.id === productId || p.product?.id === productId);
+
+    if (item) {
+      item.quantity = (Number(item.quantity) || 1) + 1;
+      this.saveAndSync(items);
+    }
+  }
+
+  // تقليل الكمية داخل صفحة السلة
+  decreaseQuantity(productId: any): void {
+    const items = [...this.cartItems()];
+    const item = items.find((p: any) => p.id === productId || p.product?.id === productId);
+
+    if (item) {
+      const currentQty = Number(item.quantity) || 1;
+      if (currentQty > 1) {
+        item.quantity = currentQty - 1;
+        this.saveAndSync(items);
+      }
+    }
+  }
   removeItem(productId: number) {
     let currentItems = this.cartItems();
 
@@ -48,4 +78,19 @@ export class Cart implements OnInit {
     localStorage.setItem('localCart', JSON.stringify(currentItems));
     this.cartItems.set(currentItems);
   }
+
+  // حساب إجمالي عدد القطع ديناميكياً
+  totalQuantity = computed(() => {
+    return this.cartItems().reduce((sum, item) => sum + (Number(item.quantity) || 1), 0);
+  });
+
+  // حساب السعر الإجمالي (Subtotal)
+  subtota = computed(() => {
+    return this.cartItems().reduce((sum, item) => {
+      // التعامل مع هيكل السعر سواء كان داخل product أو مباشر
+      const price = Number(item.price || item.product?.price) || 0;
+      const qty = Number(item.quantity) || 1;
+      return sum + price * qty;
+    }, 0);
+  });
 }

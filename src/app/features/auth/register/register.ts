@@ -26,7 +26,7 @@ export class Register {
         Validators.pattern(/^(?=.*[a-z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/),
       ],
     ],
-    phone: ['', [Validators.pattern(/^01[0125][0-9]{8}$/)]],
+    phone: [''],
   });
 
   submitForm() {

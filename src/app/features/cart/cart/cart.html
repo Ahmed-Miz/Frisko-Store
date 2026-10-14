@@ -26,18 +26,28 @@
               <div>
                 <span class="text-xs text-gray-400 block mb-1">{{ cartItem.product.title }}</span>
                 <h3 class="text-sm font-bold text-gray-800">{{ cartItem.product.description }}</h3>
-                <span class="text-green-600 font-bold text-base mt-1 block">{{
-                  cartItem.product.price
-                }}</span>
+                <span class="text-green-600 font-bold text-base mt-1 block"
+                  ><span class="text-2xs">TRY</span>{{ cartItem.product.price }}</span
+                >
               </div>
             </div>
 
             <!-- تحكم الكمية وحذف المنتج -->
             <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
               <div class="flex items-center border border-gray-200 rounded-lg">
-                <button class="px-3 py-1 text-gray-600 hover:bg-gray-100 transition">-</button>
+                <button
+                  (click)="decreaseQuantity(cartItem.product.id)"
+                  class="px-3 py-1 text-gray-600 hover:bg-gray-100 transition"
+                >
+                  -
+                </button>
                 <span class="px-3 text-sm font-bold">{{ cartItem.quantity }}</span>
-                <button class="px-3 py-1 text-gray-600 hover:bg-gray-100 transition">+</button>
+                <button
+                  (click)="increaseQuantity(cartItem.product.id)"
+                  class="px-3 py-1 text-gray-600 hover:bg-gray-100 transition"
+                >
+                  +
+                </button>
               </div>
               <button
                 (click)="removeItem(cartItem.product.id || cartItem.id)"
@@ -91,7 +101,7 @@
           <div class="space-y-3 text-sm text-gray-600 mb-6">
             <div class="flex justify-between">
               <span>Subtotal</span>
-              <span class="font-semibold text-gray-900">1,190 EGP</span>
+              <span class="font-semibold text-gray-900">{{ totalQuantity() }} قطع</span>
             </div>
             <div class="flex justify-between">
               <span>Shipping Fee</span>
@@ -101,7 +111,7 @@
               class="flex justify-between text-base font-bold text-gray-900 pt-3 border-t border-gray-100"
             >
               <span>Total Amount</span>
-              <span class="text-green-600">1,190 EGP</span>
+              <span class="text-green-600"><span class="text-2xs">TRY</span>{{ subtota() }}</span>
             </div>
           </div>
 

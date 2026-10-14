@@ -133,13 +133,6 @@
               placeholder="Phon Namber"
             />
           </div>
-          @if (registerForm.get('phone')?.touched && registerForm.get('phone')?.invalid) {
-            <div class="text-red-500 text-sm mt-1">
-              @if (registerForm.get('phone')?.hasError('pattern')) {
-                <span>Please enter a valid phone number.</span>
-              }
-            </div>
-          }
         </div>
 
         <!-- زر التسجيل -->

@@ -27,6 +27,13 @@
             formControlName="customer_name"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
+          @if (checkOut.get('customer_name')?.touched && checkOut.get('customer_name')?.invalid) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (checkOut.get('customer_name')?.hasError('required')) {
+                <span>Name is required.</span>
+              }
+            </div>
+          }
         </div>
 
         <!-- Emali -->
@@ -38,6 +45,18 @@
               formControlName="customer_email"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
+            @if (
+              checkOut.get('customer_email')?.touched && checkOut.get('customer_email')?.invalid
+            ) {
+              <div class="text-red-500 text-sm mt-1">
+                @if (checkOut.get('customer_email')?.hasError('required')) {
+                  <span>Email is required.</span>
+                }
+                @if (checkOut.get('customer_email')?.hasError('customer_email')) {
+                  <span>Please enter a valid email address.</span>
+                }
+              </div>
+            }
           </div>
           <!-- Phone Number -->
           <div>
@@ -47,6 +66,15 @@
               formControlName="customer_phone"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
+            @if (
+              checkOut.get('customer_phone')?.touched && checkOut.get('customer_phone')?.invalid
+            ) {
+              <div class="text-red-500 text-sm mt-1">
+                @if (checkOut.get('customer_phone')?.hasError('required')) {
+                  <span>Phone is required.</span>
+                }
+              </div>
+            }
           </div>
         </div>
 
@@ -58,6 +86,15 @@
             formControlName="shipping_address"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
+          @if (
+            checkOut.get('shipping_address')?.touched && checkOut.get('shipping_address')?.invalid
+          ) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (checkOut.get('shipping_address')?.hasError('required')) {
+                <span>Shipping Address is required.</span>
+              }
+            </div>
+          }
         </div>
 
         <!-- City -->
@@ -68,6 +105,13 @@
             formControlName="city"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
           />
+          @if (checkOut.get('city')?.touched && checkOut.get('city')?.invalid) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (checkOut.get('city')?.hasError('required')) {
+                <span>City is required.</span>
+              }
+            </div>
+          }
         </div>
 
         <!-- Payment Method -->
@@ -82,6 +126,13 @@
             </option>
             <option value="card">Credit Card</option>
           </select>
+          @if (checkOut.get('payment_method')?.touched && checkOut.get('payment_method')?.invalid) {
+            <div class="text-red-500 text-sm mt-1">
+              @if (checkOut.get('payment_method')?.hasError('required')) {
+                <span>Payment Method is required.</span>
+              }
+            </div>
+          }
         </div>
 
         <!-- button submit -->
