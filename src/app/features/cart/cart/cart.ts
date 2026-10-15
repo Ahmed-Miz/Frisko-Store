@@ -85,7 +85,7 @@ export class Cart implements OnInit {
   });
 
   // حساب السعر الإجمالي (Subtotal)
-  subtota = computed(() => {
+  subtotal = computed(() => {
     return this.cartItems().reduce((sum, item) => {
       // التعامل مع هيكل السعر سواء كان داخل product أو مباشر
       const price = Number(item.price || item.product?.price) || 0;

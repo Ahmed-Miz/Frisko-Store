@@ -2,123 +2,116 @@
   <div class="max-w-screen-xl mx-auto px-4">
     <!-- عنوان الصفحة -->
     <div class="mb-8">
-      <h1 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">
-        Shopping Cart
-      </h1>
+      <h1 class="text-2xl md:text-3xl font-black text-black tracking-tight">Shopping Cart</h1>
       <p class="text-sm text-gray-500 mt-1">Review your items and complete your secure payment.</p>
     </div>
 
-    <!-- شبكة المحتوى (المنتجات على اليسار/اليمين وملخص الطلب) -->
+    <!-- شبكة المحتوى -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      <!-- القسم الأول: قائمة المنتجات في السلة (تأخذ عمودين) -->
+      <!-- القسم الأول: قائمة المنتجات في السلة (عمودين) -->
       <div class="lg:col-span-2 space-y-4">
-        <!-- منتج تجريبي رقم 1 -->
-        @for (cartItem of cartItems(); track cartItem.product.id) {
+        @for (cartItem of cartItems(); track cartItem.product?.id || cartItem.id) {
           <div
-            class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4"
+            class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 transition hover:border-gray-200"
           >
             <div class="flex items-center space-x-4 rtl:space-x-reverse w-full sm:w-auto">
               <img
-                [src]="cartItem.product.primary_image"
+                [src]="cartItem.product?.primary_image || cartItem.primary_image"
                 alt="Product"
-                class="w-20 h-20 object-cover rounded-xl bg-gray-100 shrink-0"
+                class="w-20 h-20 object-cover rounded-xl bg-gray-100 shrink-0 border border-gray-100"
               />
               <div>
-                <span class="text-xs text-gray-400 block mb-1">{{ cartItem.product.title }}</span>
-                <h3 class="text-sm font-bold text-gray-800">{{ cartItem.product.description }}</h3>
-                <span class="text-green-600 font-bold text-base mt-1 block"
-                  ><span class="text-2xs">TRY</span>{{ cartItem.product.price }}</span
-                >
+                <span class="text-xs text-gray-400 block mb-1 font-medium">
+                  {{ cartItem.product?.title || cartItem.title }}
+                </span>
+                <h3 class="text-sm font-bold text-black line-clamp-1">
+                  {{
+                    cartItem.product?.description ||
+                      cartItem.product?.subtitle ||
+                      cartItem.description
+                  }}
+                </h3>
+                <span class="text-black font-black text-base mt-1 block">
+                  <span class="text-2xs font-normal text-gray-500 mr-1">TRY</span
+                  >{{ cartItem.price || cartItem.product?.price }}
+                </span>
               </div>
             </div>
 
             <!-- تحكم الكمية وحذف المنتج -->
             <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
-              <div class="flex items-center border border-gray-200 rounded-lg">
+              <div class="flex items-center border border-gray-300 rounded-xl bg-gray-50 p-0.5">
                 <button
-                  (click)="decreaseQuantity(cartItem.product.id)"
-                  class="px-3 py-1 text-gray-600 hover:bg-gray-100 transition"
+                  (click)="decreaseQuantity(cartItem.product?.id || cartItem.id)"
+                  class="w-8 h-8 rounded-lg bg-white text-black font-extrabold shadow-sm hover:bg-black hover:text-white transition flex items-center justify-center"
                 >
                   -
                 </button>
-                <span class="px-3 text-sm font-bold">{{ cartItem.quantity }}</span>
+                <span class="px-4 text-sm font-black text-black">{{ cartItem.quantity }}</span>
                 <button
-                  (click)="increaseQuantity(cartItem.product.id)"
-                  class="px-3 py-1 text-gray-600 hover:bg-gray-100 transition"
+                  (click)="increaseQuantity(cartItem.product?.id || cartItem.id)"
+                  class="w-8 h-8 rounded-lg bg-white text-black font-extrabold shadow-sm hover:bg-black hover:text-white transition flex items-center justify-center"
                 >
                   +
                 </button>
               </div>
+
               <button
-                (click)="removeItem(cartItem.product.id || cartItem.id)"
-                class="text-red-500 hover:text-red-700 transition p-2"
+                (click)="removeItem(cartItem.product?.id || cartItem.id)"
+                class="text-red-500 hover:text-red-600 transition p-2"
                 title="Remove item"
               >
-                <i class="fa-solid fa-trash-can"></i>
+                <i class="fa-solid fa-trash-can text-base"></i>
               </button>
             </div>
           </div>
+        } @empty {
+          <div class="bg-white rounded-2xl p-12 text-center border border-gray-100">
+            <i class="fa-solid fa-cart-flatbed text-4xl text-gray-300 mb-3"></i>
+            <p class="text-gray-500 font-bold text-lg mb-4">سلتك فارغة حالياً</p>
+            <a
+              routerLink="/shop"
+              class="bg-black text-white px-6 py-3 rounded-xl font-bold text-sm inline-block hover:bg-gray-800 transition"
+            >
+              تصفح المنتجات
+            </a>
+          </div>
         }
-
-        <!-- منتج تجريبي رقم 2 -->
-        <!-- <div
-          class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4"
-        >
-          <div class="flex items-center space-x-4 rtl:space-x-reverse w-full sm:w-auto">
-            <img
-              src="images/product-placeholder.jpg"
-              alt="Product"
-              class="w-20 h-20 object-cover rounded-xl bg-gray-100 shrink-0"
-            />
-            <div>
-              <span class="text-xs text-gray-400 block mb-1">Men Fashion</span>
-              <h3 class="text-sm font-bold text-gray-800">Casual Streetwear Zipper Hoodie</h3>
-              <span class="text-green-600 font-bold text-base mt-1 block">420 EGP</span>
-            </div>
-          </div>
-
-          <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
-            <div class="flex items-center border border-gray-200 rounded-lg">
-              <button class="px-3 py-1 text-gray-600 hover:bg-gray-100 transition">-</button>
-              <span class="px-3 text-sm font-bold">2</span>
-              <button class="px-3 py-1 text-gray-600 hover:bg-gray-100 transition">+</button>
-            </div>
-            <button class="text-red-500 hover:text-red-700 transition p-2" title="Remove item">
-              <i class="fa-solid fa-trash-can"></i>
-            </button>
-          </div>
-        </div> -->
       </div>
 
-      <!-- القسم الثاني: ملخص الطلب وبوابات الدفع (عمود واحد) -->
+      <!-- القسم الثاني: ملخص الطلب (عمود واحد) -->
       <div class="lg:col-span-1">
         <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 sticky top-6">
-          <h2 class="text-lg font-bold text-gray-900 mb-4 pb-3 border-b border-gray-100">
+          <h2
+            class="text-lg font-black text-black mb-4 pb-3 border-b border-gray-100 tracking-tight"
+          >
             Order Summary
           </h2>
 
           <!-- تفاصيل الحسابات -->
-          <div class="space-y-3 text-sm text-gray-600 mb-6">
+          <div class="space-y-3.5 text-sm text-gray-600 mb-6">
             <div class="flex justify-between">
               <span>Subtotal</span>
-              <span class="font-semibold text-gray-900">{{ totalQuantity() }} قطع</span>
+              <span class="font-bold text-black">{{ totalQuantity() }} قطع</span>
             </div>
             <div class="flex justify-between">
               <span>Shipping Fee</span>
-              <span class="font-semibold text-green-600">Free</span>
+              <span class="font-bold text-black">Free</span>
             </div>
             <div
-              class="flex justify-between text-base font-bold text-gray-900 pt-3 border-t border-gray-100"
+              class="flex justify-between text-base font-black text-black pt-4 border-t border-gray-100"
             >
               <span>Total Amount</span>
-              <span class="text-green-600"><span class="text-2xs">TRY</span>{{ subtota() }}</span>
+              <span class="text-black text-lg">
+                <span class="text-2xs font-normal text-gray-500 mr-1">TRY</span>{{ subtotal() }}
+              </span>
             </div>
           </div>
 
           <!-- زر إتمام الطلب -->
           <button
             [routerLink]="['/checkout', cartId().join(' ')]"
-            class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition duration-200 flex items-center justify-center space-x-2 rtl:space-x-reverse"
+            class="w-full bg-black hover:bg-gray-800 text-white font-black py-4 px-4 rounded-xl shadow-lg transition duration-200 flex items-center justify-center space-x-2 rtl:space-x-reverse cursor-pointer"
           >
             <i class="fa-solid fa-lock text-xs"></i>
             <span>Proceed to Checkout</span>
@@ -128,7 +121,7 @@
           <p
             class="text-center text-xs text-gray-400 mt-4 flex items-center justify-center space-x-1"
           >
-            <i class="fa-solid fa-shield-halved text-green-600"></i>
+            <i class="fa-solid fa-shield-halved text-black mr-1"></i>
             <span>Secure 256-bit SSL encrypted checkout</span>
           </p>
         </div>

@@ -1,13 +1,14 @@
 import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { RouterLinkActive, RouterLinkWithHref, Router } from '@angular/router';
+import { RouterLinkActive, RouterLinkWithHref, Router, NavigationEnd } from '@angular/router';
 import { Sauth } from '../../../features/auth/services/sauth';
-import { isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser, NgClass } from '@angular/common';
 import { Iproduct } from '../../../core/models/iproduct';
 import { SProduct } from '../../../core/services/s-product';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLinkActive, RouterLinkWithHref],
+  imports: [RouterLinkActive, RouterLinkWithHref, NgClass],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
@@ -16,6 +17,7 @@ export class Navbar implements OnInit {
   private sauth = inject(Sauth);
   private product = inject(SProduct);
   productList = signal<Iproduct[]>([]);
+  isMenuOpen = signal<boolean>(false);
 
   // cartCount = signal<number>(0);
   private readonly pLATFORM_ID = inject(PLATFORM_ID);
@@ -28,6 +30,12 @@ export class Navbar implements OnInit {
 
     this.getProduct();
   }
+  constructor() {
+    // إغلاق السايد بار أوتوماتيكياً عند الانتقال لأي صفحة
+    this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
+      this.closeMenu();
+    });
+  }
 
   navLinks = [
     { name: 'Men', query: { category: 1 } },
@@ -36,6 +44,14 @@ export class Navbar implements OnInit {
     { name: 'New Arrivals', query: { sort_by: 'latest' } },
     { name: 'Sale', query: { sale: true } },
   ];
+
+  toggleMenu() {
+    this.isMenuOpen.update((val) => !val);
+  }
+
+  closeMenu() {
+    this.isMenuOpen.set(false);
+  }
 
   getProduct(): void {
     this.product.getProduct().subscribe({
@@ -54,10 +70,11 @@ export class Navbar implements OnInit {
   logged = computed(() => this.sauth.isLogged());
   logout(): void {
     this.sauth.singout();
+    this.closeMenu();
   }
   onSearch(keyword: string) {
     console.log('القيمة اللي اتحكتبت فعلاً:', keyword);
-
+    this.closeMenu();
     if (!keyword || !keyword.trim()) {
       console.log('الكلمة فاضية، عشان كده وقف!');
       return;

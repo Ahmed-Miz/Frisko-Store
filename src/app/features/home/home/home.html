@@ -1,9 +1,9 @@
 <app-slider></app-slider>
 
 <div class="bg-gray-50 min-h-screen pb-16">
-  <!-- 1.(Categories Circles  -->
+  <!-- 1. (Categories Circles) -->
   <div class="max-w-screen-xl mx-auto px-4 py-6">
-    <h2 class="text-xl font-bold text-gray-800 mb-4">Shop By Categories</h2>
+    <h2 class="text-xl font-bold text-gray-900 mb-4 tracking-tight">Shop By Categories</h2>
     <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center">
       @for (categorie of categories(); track categorie.id) {
         <a
@@ -12,11 +12,11 @@
           class="group flex flex-col items-center"
         >
           <div
-            class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-green-100 flex items-center justify-center overflow-hidden border-2 border-transparent group-hover:border-green-600 transition shadow-sm"
+            class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-transparent group-hover:border-black transition shadow-sm"
           >
-            <img [src]="categorie.image" class="w-full" />
+            <img [src]="categorie.image" class="w-full object-cover" />
           </div>
-          <span class="mt-2 text-sm font-semibold text-gray-700 group-hover:text-green-600"
+          <span class="mt-2 text-sm font-semibold text-gray-700 group-hover:text-black transition"
             >{{ categorie.name }} 🔥</span
           >
         </a>
@@ -25,36 +25,42 @@
   </div>
 
   <!-- 2. بانر التخفيضات السريع (Flash Sale Banner) -->
-
   <div class="max-w-screen-xl mx-auto px-4 my-6">
     <div
-      class="bg-cover bg-center rounded-2xl p-6 md:p-10 text-white flex flex-col md:flex-row justify-between items-center shadow-lg"
+      class="bg-cover bg-center rounded-2xl p-6 md:p-10 text-white flex flex-col md:flex-row justify-between items-center shadow-lg relative overflow-hidden"
       [style.background-image]="'url(' + banners().image_url + ')'"
     >
-      <div class="mb-4 md:mb-0 text-center md:text-left">
-        <span class="bg-green-500 text-xs uppercase px-3 py-1 rounded-full font-bold"
+      <!-- طبقة تعتيم خفيفة لبروز النصوص -->
+      <div class="absolute inset-0 bg-black/40"></div>
+
+      <div class="mb-4 md:mb-0 text-center md:text-left relative z-10">
+        <span
+          class="bg-black text-white text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider border border-gray-700"
           >Limited Time</span
         >
-        <h2 class="text-3xl md:text-4xl font-extrabold mt-2">{{ banners().title }}</h2>
-        <p class="text-gray-300 text-sm mt-1">
+        <h2 class="text-3xl md:text-4xl font-extrabold mt-2 tracking-tight">
+          {{ banners().title }}
+        </h2>
+        <p class="text-gray-200 text-sm mt-1 max-w-md">
           {{ banners().subtitle }}
         </p>
       </div>
       <a
         routerLink="/shop"
-        class="bg-green-600 hover:bg-green-700 text-white font-bold px-8 py-3 rounded-full shadow transition transform hover:scale-105"
+        class="bg-white hover:bg-gray-100 text-black font-bold px-8 py-3 rounded-full shadow-md transition transform hover:scale-105 relative z-10"
       >
         Shop Now
       </a>
     </div>
   </div>
 
+  <!-- 3. المنتجات الرائجة (Trending Products) -->
   <div class="max-w-screen-xl mx-auto px-4 mt-10">
     <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold text-gray-800 border-l-4 border-green-600 pl-3">
+      <h2 class="text-2xl font-bold text-gray-900 border-l-4 border-black pl-3 tracking-tight">
         Trending Products
       </h2>
-      <a routerLink="/shop" class="text-green-600 hover:underline font-semibold text-sm"
+      <a routerLink="/shop" class="text-black hover:underline font-bold text-sm tracking-wide"
         >View All &rarr;</a
       >
     </div>
@@ -68,7 +74,7 @@
           (click)="openProductDetails(product.id)"
           class="bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col justify-between cursor-pointer"
         >
-          <!-- قسم الصورة كما هو بدون أي تغيير -->
+          <!-- قسم الصورة -->
           <div class="relative bg-gray-100 w-full h-48 sm:h-64 overflow-hidden">
             <img
               [src]="product.primary_image"
@@ -77,38 +83,36 @@
             />
             @if (isNewProduct(product.created_at)) {
               <span
-                class="absolute top-2 left-2 bg-green-600 text-white text-[10px] font-bold px-2 py-0.5 rounded shadow"
+                class="absolute top-2 left-2 bg-black text-white text-[10px] font-bold px-2.5 py-1 rounded shadow"
               >
                 {{ product.badge_label }}
               </span>
             }
             <button
-              class="absolute top-2 right-2 w-7 h-7 sm:w-8 sm:h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-700 hover:text-red-500 transition shadow"
+              class="absolute top-2 right-2 w-7 h-7 sm:w-8 sm:h-8 bg-white/90 rounded-full flex items-center justify-center text-black hover:text-gray-600 transition shadow"
             >
               <i class="fa-regular fa-heart text-xs sm:text-sm"></i>
             </button>
           </div>
 
-          <!-- تفاصيل المنتج (تم ضبط المحاذاة لتبدأ من اليمين تماماً) -->
+          <!-- تفاصيل المنتج -->
           <div class="p-4 flex flex-col flex-grow justify-between bg-white text-right" dir="rtl">
             <div>
-              <!-- العنوان الترويجي أو اسم الماركة -->
               <span class="text-[11px] sm:text-xs text-gray-400 block mb-1 truncate text-right">
                 {{ product.title }}
               </span>
-              <!-- وصف المنتج بمحاذاة صحيحة من اليمين -->
               <h3
-                class="text-xs sm:text-sm font-semibold text-gray-800 line-clamp-2 leading-relaxed text-right"
+                class="text-xs sm:text-sm font-semibold text-gray-900 line-clamp-2 leading-relaxed text-right"
               >
                 {{ product.description || product.subtitle }}
               </h3>
             </div>
 
-            <!-- السعر وزر الانتقال للتفاصيل -->
+            <!-- السعر وزر السلة -->
             <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
               <div>
-                <span class="text-emerald-600 font-extrabold text-sm sm:text-base block text-right">
-                  <span class="text-[10px] font-normal">TRY</span> {{ product.price }}
+                <span class="text-black font-black text-sm sm:text-base block text-right">
+                  <span class="text-[10px] font-normal text-gray-500">TRY</span> {{ product.price }}
                 </span>
                 @if (product.old_price) {
                   <span class="text-gray-400 text-[11px] sm:text-xs line-through text-right block">
@@ -117,9 +121,9 @@
                 }
               </div>
 
-              <!-- أيقونة السلة أو التفاصيل -->
+              <!-- أيقونة السلة -->
               <div
-                class="w-8 h-8 rounded-full bg-gray-50 group-hover:bg-black group-hover:text-white text-gray-700 flex items-center justify-center transition shadow-sm"
+                class="w-8 h-8 rounded-full bg-gray-100 group-hover:bg-black group-hover:text-white text-black flex items-center justify-center transition shadow-sm"
               >
                 <i class="fa-solid fa-cart-shopping text-xs"></i>
               </div>
