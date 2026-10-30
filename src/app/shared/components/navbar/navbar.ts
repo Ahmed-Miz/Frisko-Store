@@ -2,9 +2,10 @@ import { Component, computed, inject, OnInit, PLATFORM_ID, signal } from '@angul
 import { RouterLinkActive, RouterLinkWithHref, Router, NavigationEnd } from '@angular/router';
 import { Sauth } from '../../../features/auth/services/sauth';
 import { isPlatformBrowser, NgClass } from '@angular/common';
-import { Iproduct } from '../../../core/models/iproduct';
 import { SProduct } from '../../../core/services/s-product';
 import { filter } from 'rxjs';
+import { CategoriesService } from '../../../core/services/categories-service';
+import { Icategories } from '../../../core/models/icategories';
 
 @Component({
   selector: 'app-navbar',
@@ -15,35 +16,29 @@ import { filter } from 'rxjs';
 export class Navbar implements OnInit {
   private router = inject(Router);
   private sauth = inject(Sauth);
+  private categoriesService = inject(CategoriesService);
   private product = inject(SProduct);
-  productList = signal<Iproduct[]>([]);
-  isMenuOpen = signal<boolean>(false);
 
-  // cartCount = signal<number>(0);
+  navLinks = signal<Icategories[]>([]);
+  isMenuOpen = signal<boolean>(false);
+  expandedMobileCategory = signal<string | null>(null); // لتحديد القسم الفرعي المفتوح في الموبايل
+
   private readonly pLATFORM_ID = inject(PLATFORM_ID);
+
   ngOnInit(): void {
     if (isPlatformBrowser(this.pLATFORM_ID)) {
       if (localStorage.getItem('freshToken')) {
         this.sauth.isLogged.set(true);
       }
     }
-
-    this.getProduct();
+    this.getToCategories('');
   }
+
   constructor() {
-    // إغلاق السايد بار أوتوماتيكياً عند الانتقال لأي صفحة
     this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
       this.closeMenu();
     });
   }
-
-  navLinks = [
-    { name: 'Men', query: { category: 1 } },
-    { name: 'Women', query: { category: 2 } },
-    { name: 'Kids', query: { category: 'kids' } },
-    { name: 'New Arrivals', query: { sort_by: 'latest' } },
-    { name: 'Sale', query: { sale: true } },
-  ];
 
   toggleMenu() {
     this.isMenuOpen.update((val) => !val);
@@ -51,41 +46,34 @@ export class Navbar implements OnInit {
 
   closeMenu() {
     this.isMenuOpen.set(false);
+    this.expandedMobileCategory.set(null);
   }
 
-  getProduct(): void {
-    this.product.getProduct().subscribe({
+  toggleMobileCategory(slug: string) {
+    this.expandedMobileCategory.update((current) => (current === slug ? null : slug));
+  }
+
+  getToCategories(slug: string): void {
+    this.categoriesService.getCategories(slug).subscribe({
       next: (res) => {
-        let data = res.data.data;
-        this.productList.set(data);
-        console.log(data);
-      },
-      error: (err) => {
-        console.log(err);
+        this.navLinks.set(res.data);
       },
     });
   }
 
-  // button singOut
   logged = computed(() => this.sauth.isLogged());
+
   logout(): void {
     this.sauth.singout();
     this.closeMenu();
   }
-  onSearch(keyword: string) {
-    console.log('القيمة اللي اتحكتبت فعلاً:', keyword);
-    this.closeMenu();
-    if (!keyword || !keyword.trim()) {
-      console.log('الكلمة فاضية، عشان كده وقف!');
-      return;
-    }
 
-    this.router
-      .navigate(['/shop'], {
-        queryParams: { search: keyword.trim() },
-      })
-      .then((success) => {
-        console.log('تم الانتقال بنجاح:', success);
-      });
+  onSearch(keyword: string) {
+    this.closeMenu();
+    if (!keyword || !keyword.trim()) return;
+
+    this.router.navigate(['/shop'], {
+      queryParams: { search: keyword.trim() },
+    });
   }
 }

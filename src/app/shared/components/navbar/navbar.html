@@ -1,8 +1,7 @@
 <!-- 1. (Top Bar) -->
 <div class="bg-black text-white text-xs py-1.5 md:py-2 px-4 border-b border-gray-800">
   <div class="max-w-screen-xl mx-auto flex flex-wrap justify-between items-center">
-    <!-- اليسار: مميزات المتجر -->
-    <div class="hidden md:flex mt-2.5 md:mt-0 flex items-center space-x-6 rtl:space-x-reverse">
+    <div class="hidden md:flex items-center space-x-6 rtl:space-x-reverse">
       <span class="flex items-center">
         <i class="fa-solid fa-truck-fast text-white mr-2"></i> Free Shipping on Orders 500 EGP
       </span>
@@ -11,7 +10,6 @@
       </span>
     </div>
 
-    <!-- Auth / Contact -->
     <div
       class="md:flex text-2xs md:text-xs items-center justify-between space-x-4 rtl:space-x-reverse"
     >
@@ -27,13 +25,12 @@
     </div>
   </div>
 </div>
-<nav
-  class="bg-white transition-all duration-300 border-b border-gray-100 py-3 px-4 sticky top-0 z-50"
->
+
+<!-- 2. Navbar الرئيسية -->
+<nav class="bg-white border-b border-gray-100 py-3 px-4 sticky top-0 z-50 shadow-xs">
   <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
-    <!-- Header / Logo + Mobile Buttons -->
+    <!-- Logo & Mobile Controls -->
     <div class="w-full flex items-center justify-between md:w-auto">
-      <!-- (Logo) -->
       <a routerLink="/shop" class="flex items-center space-x-2 rtl:space-x-reverse">
         <img
           src="/WhatsApp Image 2026-09-25 at 1.36.47 PM.jpeg"
@@ -43,31 +40,19 @@
         <span class="text-xl md:text-2xl font-black text-black tracking-tight">Frisko</span>
       </a>
 
-      <!-- أزرار الموبايل -->
       <div class="flex items-center space-x-2 rtl:space-x-reverse md:hidden">
         <a routerLink="/cart" class="text-black hover:text-gray-600 text-lg relative p-2">
           <i class="fa-solid fa-cart-shopping"></i>
         </a>
-
-        <!-- زر فتح السايد بار -->
         <button
           (click)="toggleMenu()"
           type="button"
           class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-black rounded-lg hover:bg-gray-100 focus:outline-none cursor-pointer"
-          aria-label="Toggle navigation menu"
         >
-          <svg
-            class="w-6 h-6"
-            aria-hidden="true"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
-              stroke="currentColor"
               stroke-linecap="round"
+              stroke-linejoin="round"
               stroke-width="2"
               d="M5 7h14M5 12h14M5 17h14"
             />
@@ -76,28 +61,11 @@
       </div>
     </div>
 
-    <!-- Input البحث للموبايل (خارج السايد بار) -->
+    <!-- Mobile Search Input -->
     <div class="w-full md:hidden relative">
-      <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-        <svg
-          class="w-4 h-4 text-gray-400"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-width="2"
-            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"
-          />
-        </svg>
-      </div>
       <input
         type="text"
         #mobileInput
-        (input)="onSearch(mobileInput.value)"
         (keyup.enter)="onSearch(mobileInput.value)"
         placeholder="Search for products..."
         class="w-full bg-gray-100 border border-gray-200 text-black text-sm rounded-full pl-9 pr-12 py-2.5 outline-none focus:border-black"
@@ -111,46 +79,91 @@
       </button>
     </div>
 
-    <!-- ==================== Desktop Navigation Links ==================== -->
+    <!-- Desktop Navigation Links (Mega Menu Hover - Shein Style) -->
     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
-      <ul class="font-medium flex md:flex-row md:items-center md:space-x-6 rtl:space-x-reverse">
+      <ul
+        class="font-medium flex md:flex-row md:items-center md:space-x-8 rtl:space-x-reverse text-sm"
+      >
         <li>
           <a
             routerLink="/home"
-            routerLinkActive="text-black font-extrabold underline underline-offset-8"
+            routerLinkActive="text-black font-black underline underline-offset-8"
             [routerLinkActiveOptions]="{ exact: true }"
-            class="block text-gray-800 hover:text-black transition"
+            class="block py-2 text-gray-800 hover:text-black font-bold transition"
             >Home</a
           >
         </li>
         <li>
           <a
             routerLink="/shop"
-            routerLinkActive="text-black font-extrabold underline underline-offset-8"
+            routerLinkActive="text-black font-black underline underline-offset-8"
             [routerLinkActiveOptions]="{ exact: true }"
-            class="block text-gray-800 hover:text-black transition"
+            class="block py-2 text-gray-800 hover:text-black font-bold transition"
             >Shop</a
           >
         </li>
-        @for (link of navLinks; track link.name) {
-          <li>
+
+        <!-- dynamic categories as Mega Menu -->
+        @for (category of navLinks(); track category.id || category.slug) {
+          <li class="relative group py-2">
             <a
               [routerLink]="['/shop']"
-              [queryParams]="link.query"
-              routerLinkActive="text-black font-extrabold underline underline-offset-8"
-              class="block text-gray-800 hover:text-black transition"
+              [queryParams]="{ slug: category.slug }"
+              routerLinkActive="text-black font-black underline underline-offset-8"
+              class="flex items-center gap-1.5 text-gray-800 hover:text-black font-bold transition cursor-pointer py-1"
             >
-              {{ link.name }}
+              {{ category.name }}
+              @if (category.children && category.children.length > 0) {
+                <i
+                  class="fa-solid fa-chevron-down text-[10px] text-gray-400 group-hover:rotate-180 transition-transform duration-200"
+                ></i>
+              }
             </a>
+
+            <!-- Mega Dropdown Panel (Shein Style) -->
+            @if (category.children && category.children.length > 0) {
+              <div
+                class="absolute top-full right-0 w-72 bg-white border border-gray-100 shadow-2xl rounded-2xl p-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-3 group-hover:translate-y-0 z-50"
+              >
+                <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
+                  <span class="text-xs font-black text-black uppercase tracking-wider">
+                    {{ category.name }}
+                  </span>
+                  <a
+                    [routerLink]="['/shop']"
+                    [queryParams]="{ slug: category.slug }"
+                    class="text-[11px] text-gray-400 hover:text-black transition font-semibold"
+                  >
+                    View All &rarr;
+                  </a>
+                </div>
+
+                <ul class="space-y-2" dir="rtl">
+                  @for (sub of category.children; track sub.id || sub.slug) {
+                    <li class="flex">
+                      <div class="size-10 rounded-full border-amber-400 bg-amber-600">
+                        <img [src]="sub.image_url" class="w-100" [alt]="sub.name" />
+                      </div>
+                      <a
+                        [routerLink]="['/shop']"
+                        [queryParams]="{ subcategory: sub.slug }"
+                        class="block text-sm text-gray-600 hover:text-black hover:font-bold transition py-1.5 px-3 rounded-xl hover:bg-gray-50"
+                      >
+                        {{ sub.name }}
+                      </a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
           </li>
         }
 
-        <!-- أزرار الدخول والمفضلة (Desktop) -->
-        <div class="flex items-center space-x-4 rtl:space-x-reverse">
+        <!-- Actions -->
+        <div class="flex items-center space-x-4 rtl:space-x-reverse pt-1">
           <a routerLink="/wishlist" class="text-black hover:text-gray-600 text-xl">
             <i class="fa-regular fa-heart"></i>
           </a>
-
           <a routerLink="/cart" class="text-black hover:text-gray-600 text-xl relative p-1">
             <i class="fa-solid fa-cart-shopping"></i>
           </a>
@@ -158,39 +171,36 @@
           @if (logged()) {
             <button
               (click)="logout()"
-              class="bg-black hover:bg-gray-800 text-white font-medium text-sm px-5 py-2 rounded-full flex items-center justify-center space-x-2 rtl:space-x-reverse transition cursor-pointer"
+              class="bg-black hover:bg-gray-800 text-white font-bold text-xs px-5 py-2 rounded-full transition cursor-pointer"
             >
-              <i class="fa-solid fa-right-from-bracket mr-1"></i>
-              <span>Sign Out</span>
+              Sign Out
             </button>
           } @else {
             <a
               routerLink="/auth/login"
-              class="bg-black hover:bg-gray-800 text-white font-medium text-sm px-5 py-2 rounded-full flex items-center justify-center space-x-2 rtl:space-x-reverse transition"
+              class="bg-black hover:bg-gray-800 text-white font-bold text-xs px-5 py-2 rounded-full transition"
             >
-              <i class="fa-regular fa-user"></i>
-              <span>Sign In</span>
+              Sign In
             </a>
           }
         </div>
       </ul>
     </div>
 
-    <!-- Input البحث للديسكتوب -->
+    <!-- Desktop Search Input -->
     <div class="hidden md:block flex-1 max-w-md mx-4">
       <div class="relative">
         <input
           type="text"
           #desktopInput
-          (input)="onSearch(desktopInput.value)"
-          (click)="$event.stopPropagation()"
+          (keyup.enter)="onSearch(desktopInput.value)"
           placeholder="Search for products..."
           class="w-full bg-gray-100 border border-gray-200 text-black text-sm rounded-full pl-4 pr-12 py-2.5 focus:border-black outline-none transition"
         />
         <button
           type="button"
           (click)="onSearch(desktopInput.value)"
-          class="absolute right-1 top-1/2 -translate-y-1/2 bg-black hover:bg-gray-800 text-white w-8 h-8 rounded-full flex items-center justify-center transition"
+          class="absolute right-1 top-1/2 -translate-y-1/2 bg-black hover:bg-gray-800 text-white w-8 h-8 rounded-full flex items-center justify-center transition cursor-pointer"
         >
           <i class="fa-solid fa-magnifying-glass text-xs"></i>
         </button>
@@ -199,9 +209,7 @@
   </div>
 </nav>
 
-<!-- ==================== Mobile Off-Canvas Sidebar & Overlay ==================== -->
-
-<!-- 1. Backdrop Overlay (الخلفية المظلمة عند الفتح) -->
+<!-- ==================== Mobile Off-Canvas Sidebar & Accordion Subcategories ==================== -->
 <div
   (click)="closeMenu()"
   [ngClass]="{
@@ -211,16 +219,15 @@
   class="fixed inset-0 bg-black/60 z-50 transition-opacity duration-300 md:hidden backdrop-blur-xs"
 ></div>
 
-<!-- 2. Mobile Sidebar Drawer (يخرج من اليسار) -->
 <aside
   [ngClass]="{
     'translate-x-0': isMenuOpen(),
     '-translate-x-full': !isMenuOpen(),
   }"
-  class="fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-white z-50 shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-6"
+  class="fixed top-0 left-0 bottom-0 w-4/5 max-w-xs bg-white z-50 shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col justify-between p-6 overflow-y-auto"
 >
   <div>
-    <!-- رأس السايد بار: الشعار + زر الإغلاق -->
+    <!-- Mobile Sidebar Header -->
     <div class="flex items-center justify-between pb-6 border-b border-gray-100">
       <a
         routerLink="/shop"
@@ -242,13 +249,11 @@
       </button>
     </div>
 
-    <!-- روابط التنقل الرئيسية -->
-    <ul class="py-6 space-y-4 font-bold text-base text-gray-900">
+    <!-- Navigation List -->
+    <ul class="py-6 space-y-3 font-bold text-base text-gray-900">
       <li>
         <a
           routerLink="/home"
-          routerLinkActive="text-black underline underline-offset-8"
-          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeMenu()"
           class="block py-2 hover:text-gray-600 transition"
         >
@@ -258,27 +263,68 @@
       <li>
         <a
           routerLink="/shop"
-          routerLinkActive="text-black underline underline-offset-8"
-          [routerLinkActiveOptions]="{ exact: true }"
           (click)="closeMenu()"
           class="block py-2 hover:text-gray-600 transition"
         >
           Shop
         </a>
       </li>
-      @for (link of navLinks; track link.name) {
-        <li>
-          <a
-            [routerLink]="['/shop']"
-            [queryParams]="link.query"
-            routerLinkActive="text-black underline underline-offset-8"
-            (click)="closeMenu()"
-            class="block py-2 hover:text-gray-600 transition"
-          >
-            {{ link.name }}
-          </a>
+
+      <!-- Mobile Accordion Menu -->
+      @for (category of navLinks(); track category.id || category.slug) {
+        <li class="border-b border-gray-50 pb-2">
+          <div class="flex items-center justify-between py-2">
+            <a
+              [routerLink]="['/shop']"
+              [queryParams]="{ slug: category.slug }"
+              (click)="closeMenu()"
+              class="hover:text-gray-600 transition"
+            >
+              {{ category.name }}
+            </a>
+            @if (category.children && category.children.length > 0) {
+              <button
+                (click)="toggleMobileCategory(category.slug)"
+                class="p-2 text-gray-400 hover:text-black transition"
+              >
+                <i
+                  class="fa-solid fa-chevron-down text-xs transition-transform duration-200"
+                  [class.rotate-180]="expandedMobileCategory() === category.slug"
+                ></i>
+              </button>
+            }
+          </div>
+
+          <!-- Subcategories Dropdown in Mobile -->
+          @if (
+            category.children &&
+            category.children.length > 0 &&
+            expandedMobileCategory() === category.slug
+          ) {
+            <ul
+              class="pr-4 pl-2 my-2 space-y-2 border-r-2 border-black/10 text-sm font-medium"
+              dir="rtl"
+            >
+              @for (sub of category.children; track sub.id || sub.slug) {
+                <li class="flex gap-3">
+                  <div class="size-10 rounded-full border-amber-400 bg-amber-600">
+                    <img [src]="sub.image_url" class="w-100" [alt]="sub.name" />
+                  </div>
+                  <a
+                    [routerLink]="['/shop']"
+                    [queryParams]="{ subcategory: sub.slug }"
+                    (click)="closeMenu()"
+                    class="block py-1 text-gray-600 hover:text-black transition"
+                  >
+                    {{ sub.name }}•
+                  </a>
+                </li>
+              }
+            </ul>
+          }
         </li>
       }
+
       <li>
         <a
           routerLink="/wishlist"
@@ -292,7 +338,7 @@
     </ul>
   </div>
 
-  <!-- أسفل السايد بار: أزرار الدخول/الخروج -->
+  <!-- Mobile Footer Auth -->
   <div class="pt-6 border-t border-gray-100">
     @if (logged()) {
       <button
