@@ -1,9 +1,10 @@
 <app-slider></app-slider>
-
 <div class="bg-gray-50 min-h-screen pb-16">
   <!-- 1. (Categories Circles) -->
   <div class="max-w-screen-xl mx-auto px-4 py-6">
-    <h2 class="text-xl font-bold text-gray-900 mb-4 tracking-tight">Shop By Categories</h2>
+    <h2 class="text-xl font-bold text-gray-900 mb-4 tracking-tight">
+      {{ 'HOME.SHOP_BY_CATEGORIES' | translate }}
+    </h2>
     <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 text-center">
       @for (categorie of categories(); track categorie.id) {
         <a
@@ -14,7 +15,7 @@
           <div
             class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-transparent group-hover:border-black transition shadow-sm"
           >
-            <img [src]="categorie.image" class="w-full object-cover" />
+            <img [src]="categorie.image" class="w-full object-cover" [alt]="categorie.name" />
           </div>
           <span class="mt-2 text-sm font-semibold text-gray-700 group-hover:text-black transition"
             >{{ categorie.name }} 🔥</span
@@ -33,10 +34,10 @@
       <!-- طبقة تعتيم خفيفة لبروز النصوص -->
       <div class="absolute inset-0 bg-black/40"></div>
 
-      <div class="mb-4 md:mb-0 text-center md:text-left relative z-10">
+      <div class="mb-4 md:mb-0 text-center md:text-start relative z-10">
         <span
           class="bg-black text-white text-xs uppercase px-3 py-1 rounded-full font-bold tracking-wider border border-gray-700"
-          >Limited Time</span
+          >{{ 'HOME.LIMITED_TIME' | translate }}</span
         >
         <h2 class="text-3xl md:text-4xl font-extrabold mt-2 tracking-tight">
           {{ banners().title }}
@@ -49,7 +50,7 @@
         routerLink="/shop"
         class="bg-white hover:bg-gray-100 text-black font-bold px-8 py-3 rounded-full shadow-md transition transform hover:scale-105 relative z-10"
       >
-        Shop Now
+        {{ 'HOME.SHOP_NOW' | translate }}
       </a>
     </div>
   </div>
@@ -57,11 +58,11 @@
   <!-- 3. المنتجات الرائجة (Trending Products) -->
   <div class="max-w-screen-xl mx-auto px-4 mt-10">
     <div class="flex justify-between items-center mb-6">
-      <h2 class="text-2xl font-bold text-gray-900 border-l-4 border-black pl-3 tracking-tight">
-        Trending Products
+      <h2 class="text-2xl font-bold text-gray-900 border-s-4 border-black ps-3 tracking-tight">
+        {{ 'HOME.TRENDING_PRODUCTS' | translate }}
       </h2>
       <a routerLink="/shop" class="text-black hover:underline font-bold text-sm tracking-wide"
-        >View All &rarr;</a
+        >{{ 'HOME.VIEW_ALL' | translate }} &rarr;</a
       >
     </div>
 
@@ -83,26 +84,26 @@
             />
             @if (isNewProduct(product.created_at)) {
               <span
-                class="absolute top-2 left-2 bg-black text-white text-[10px] font-bold px-2.5 py-1 rounded shadow"
+                class="absolute top-2 start-2 bg-black text-white text-[10px] font-bold px-2.5 py-1 rounded shadow"
               >
                 {{ product.badge_label }}
               </span>
             }
             <button
-              class="absolute top-2 right-2 w-7 h-7 sm:w-8 sm:h-8 bg-white/90 rounded-full flex items-center justify-center text-black hover:text-gray-600 transition shadow"
+              class="absolute top-2 end-2 w-7 h-7 sm:w-8 sm:h-8 bg-white/90 rounded-full flex items-center justify-center text-black hover:text-gray-600 transition shadow"
             >
               <i class="fa-regular fa-heart text-xs sm:text-sm"></i>
             </button>
           </div>
 
           <!-- تفاصيل المنتج -->
-          <div class="p-4 flex flex-col flex-grow justify-between bg-white text-right" dir="rtl">
+          <div class="p-4 flex flex-col flex-grow justify-between bg-white text-start">
             <div>
-              <span class="text-[11px] sm:text-xs text-gray-400 block mb-1 truncate text-right">
+              <span class="text-[11px] sm:text-xs text-gray-400 block mb-1 truncate">
                 {{ product.title }}
               </span>
               <h3
-                class="text-xs sm:text-sm font-semibold text-gray-900 line-clamp-2 leading-relaxed text-right"
+                class="text-xs sm:text-sm font-semibold text-gray-900 line-clamp-2 leading-relaxed"
               >
                 {{ product.description || product.subtitle }}
               </h3>
@@ -111,12 +112,16 @@
             <!-- السعر وزر السلة -->
             <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between">
               <div>
-                <span class="text-black font-black text-sm sm:text-base block text-right">
-                  <span class="text-[10px] font-normal text-gray-500">TRY</span> {{ product.price }}
+                <span class="text-black font-black text-sm sm:text-base block">
+                  <span class="text-[10px] font-normal text-gray-500">{{
+                    'HOME.CURRENCY' | translate
+                  }}</span>
+                  {{ product.price }}
                 </span>
                 @if (product.old_price) {
-                  <span class="text-gray-400 text-[11px] sm:text-xs line-through text-right block">
-                    <span class="text-[9px]">TRY</span> {{ product.old_price }}
+                  <span class="text-gray-400 text-[11px] sm:text-xs line-through block">
+                    <span class="text-[9px]">{{ 'HOME.CURRENCY' | translate }}</span>
+                    {{ product.old_price }}
                   </span>
                 }
               </div>
@@ -132,7 +137,7 @@
         </div>
       } @empty {
         <div class="col-span-full text-center py-16 text-gray-400">
-          لا توجد منتجات متاحة حالياً.
+          {{ 'HOME.NO_PRODUCTS' | translate }}
         </div>
       }
     </div>

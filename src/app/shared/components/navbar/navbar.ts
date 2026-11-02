@@ -6,10 +6,12 @@ import { SProduct } from '../../../core/services/s-product';
 import { filter } from 'rxjs';
 import { CategoriesService } from '../../../core/services/categories-service';
 import { Icategories } from '../../../core/models/icategories';
+import { TranslatePipe } from '@ngx-translate/core';
+import { BtnLang } from '../btn-lang/btn-lang';
 
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLinkActive, RouterLinkWithHref, NgClass],
+  imports: [RouterLinkActive, RouterLinkWithHref, NgClass, TranslatePipe, BtnLang],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

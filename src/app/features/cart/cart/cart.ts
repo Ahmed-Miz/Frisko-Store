@@ -2,10 +2,11 @@ import { Component, computed, inject, OnDestroy, OnInit, PLATFORM_ID, signal } f
 import { Scart } from '../../../core/services/scart';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cart',
-  imports: [RouterLink],
+  imports: [RouterLink, TranslatePipe],
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })

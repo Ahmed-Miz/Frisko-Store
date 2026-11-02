@@ -1,10 +1,12 @@
-import { Component, Inject, PLATFORM_ID, signal } from '@angular/core';
+import { Component, inject, Inject, PLATFORM_ID, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './shared/components/navbar/navbar';
 import { Footer } from './shared/components/footer/footer';
 import { initFlowbite } from 'flowbite';
 import { isPlatformBrowser } from '@angular/common';
 import { NgxSpinnerComponent } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
+import { MyTranslateService } from './core/services/my-translate-service';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +16,17 @@ import { NgxSpinnerComponent } from 'ngx-spinner';
 })
 export class App {
   protected readonly title = signal('Frisko-store');
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+  private translate = inject(TranslateService);
+  private myTranslateService = inject(MyTranslateService);
+  private pLATFORM_ID = inject(PLATFORM_ID);
+  constructor() {
+    // call addLangs() to register additional languages the user can switch to.
+    this.translate.addLangs(['tr', 'en', 'ar']);
+    if (isPlatformBrowser(this.pLATFORM_ID)) {
+      if (localStorage.getItem('lang')) {
+        this.translate.use(localStorage.getItem('lang')!);
+        this.myTranslateService.chengeDirection();
+      }
       initFlowbite();
     }
   }

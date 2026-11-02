@@ -2,51 +2,53 @@
   <div class="max-w-screen-xl mx-auto px-4">
     <!-- 1. شريط المميزات السريع أعلى الفوتر -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6 pb-12 border-b border-gray-800">
-      <div class="flex items-center space-x-3 rtl:space-x-reverse">
+      <div class="flex items-center space-x-3">
         <div
           class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white text-xl"
         >
           <i class="fa-solid fa-truck-fast"></i>
         </div>
         <div>
-          <h4 class="text-white font-semibold text-sm">Free Shipping</h4>
-          <p class="text-xs text-gray-400">On orders over 500 EGP</p>
+          <h4 class="text-white font-semibold text-sm">{{ 'FOOTER.FREE_SHIPPING' | translate }}</h4>
+          <p class="text-xs text-gray-400">{{ 'FOOTER.FREE_SHIPPING_SUB' | translate }}</p>
         </div>
       </div>
 
-      <div class="flex items-center space-x-3 rtl:space-x-reverse">
+      <div class="flex items-center space-x-3">
         <div
           class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white text-xl"
         >
           <i class="fa-solid fa-rotate-left"></i>
         </div>
         <div>
-          <h4 class="text-white font-semibold text-sm">Easy Returns</h4>
-          <p class="text-xs text-gray-400">14-day return policy</p>
+          <h4 class="text-white font-semibold text-sm">{{ 'FOOTER.EASY_RETURNS' | translate }}</h4>
+          <p class="text-xs text-gray-400">{{ 'FOOTER.EASY_RETURNS_SUB' | translate }}</p>
         </div>
       </div>
 
-      <div class="flex items-center space-x-3 rtl:space-x-reverse">
+      <div class="flex items-center space-x-3">
         <div
           class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white text-xl"
         >
           <i class="fa-solid fa-headset"></i>
         </div>
         <div>
-          <h4 class="text-white font-semibold text-sm">24/7 Support</h4>
-          <p class="text-xs text-gray-400">Dedicated customer care</p>
+          <h4 class="text-white font-semibold text-sm">{{ 'FOOTER.SUPPORT' | translate }}</h4>
+          <p class="text-xs text-gray-400">{{ 'FOOTER.SUPPORT_SUB' | translate }}</p>
         </div>
       </div>
 
-      <div class="flex items-center space-x-3 rtl:space-x-reverse">
+      <div class="flex items-center space-x-3">
         <div
           class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white text-xl"
         >
           <i class="fa-solid fa-shield-halved"></i>
         </div>
         <div>
-          <h4 class="text-white font-semibold text-sm">Secure Checkout</h4>
-          <p class="text-xs text-gray-400">100% protected payment</p>
+          <h4 class="text-white font-semibold text-sm">
+            {{ 'FOOTER.SECURE_CHECKOUT' | translate }}
+          </h4>
+          <p class="text-xs text-gray-400">{{ 'FOOTER.SECURE_CHECKOUT_SUB' | translate }}</p>
         </div>
       </div>
     </div>
@@ -57,16 +59,21 @@
     >
       <!-- العمود الأول: عن المتجر -->
       <div class="lg:col-span-2">
-        <div class="flex items-center space-x-2 rtl:space-x-reverse mb-4">
-          <img src="/WhatsApp Image 2026-09-25 at 1.36.47 PM.jpeg" class="w-12 rounded-2xl" />
-          <span class="text-2xl font-black text-white tracking-tight">Frisko</span>
+        <div class="flex items-center space-x-2 mb-4">
+          <img
+            src="/WhatsApp Image 2026-09-25 at 1.36.47 PM.jpeg"
+            class="w-12 rounded-2xl"
+            alt="Frisko"
+          />
+          <span class="text-2xl font-black text-white tracking-tight">{{
+            'FOOTER.LOGO' | translate
+          }}</span>
         </div>
         <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-          وجهتك الأولى لعالم الموضة العصري. نقدم أحدث صيحات الملابس والهوديات بتصميمات عالمية وجودة
-          عالية تناسب كل الأوقات.
+          {{ 'FOOTER.ABOUT_DESC' | translate }}
         </p>
         <!-- وسائل التواصل الاجتماعي -->
-        <div class="flex space-x-3 rtl:space-x-reverse text-lg">
+        <div class="flex space-x-3 text-lg">
           <a
             href="https://www.facebook.com/share/19jiPkCUWz/"
             target="_blank"
@@ -97,61 +104,89 @@
 
       <!-- العمود الثاني: الأقسام -->
       <div>
-        <h3 class="text-white font-bold text-base mb-4 tracking-wide">Shop Categories</h3>
+        <h3 class="text-white font-bold text-base mb-4 tracking-wide">
+          {{ 'FOOTER.CATEGORIES_TITLE' | translate }}
+        </h3>
         <ul class="space-y-3 text-sm">
           <li>
-            <a routerLink="/shop" class="cursor-pointer hover:text-white transition">Hoodies 🔥</a>
+            <a routerLink="/shop" class="cursor-pointer hover:text-white transition">{{
+              'FOOTER.HOODIES' | translate
+            }}</a>
           </li>
           <li>
-            <a routerLink="/shop" class="cursor-pointer hover:text-white transition"
-              >Men's Fashion</a
-            >
+            <a routerLink="/shop" class="cursor-pointer hover:text-white transition">{{
+              'FOOTER.MENS_FASHION' | translate
+            }}</a>
           </li>
           <li>
-            <a routerLink="/shop" class="cursor-pointer hover:text-white transition"
-              >Women's Fashion</a
-            >
+            <a routerLink="/shop" class="cursor-pointer hover:text-white transition">{{
+              'FOOTER.WOMENS_FASHION' | translate
+            }}</a>
           </li>
           <li>
-            <a routerLink="/shop" class="cursor-pointer hover:text-white transition"
-              >Kids Collection</a
-            >
+            <a routerLink="/shop" class="cursor-pointer hover:text-white transition">{{
+              'FOOTER.KIDS_COLLECTION' | translate
+            }}</a>
           </li>
           <li>
-            <a routerLink="/shop" class="cursor-pointer hover:text-white transition">Accessories</a>
+            <a routerLink="/shop" class="cursor-pointer hover:text-white transition">{{
+              'FOOTER.ACCESSORIES' | translate
+            }}</a>
           </li>
         </ul>
       </div>
 
       <!-- العمود الثالث: خدمة العملاء -->
       <div>
-        <h3 class="text-white font-bold text-base mb-4 tracking-wide">Customer Care</h3>
+        <h3 class="text-white font-bold text-base mb-4 tracking-wide">
+          {{ 'FOOTER.CUSTOMER_CARE_TITLE' | translate }}
+        </h3>
         <ul class="space-y-3 text-sm">
-          <li><a href="#" class="hover:text-white transition">Contact Us</a></li>
-          <li><a href="#" class="hover:text-white transition">Track Your Order</a></li>
-          <li><a href="#" class="hover:text-white transition">Shipping & Delivery</a></li>
-          <li><a href="#" class="hover:text-white transition">Returns & Exchanges</a></li>
-          <li><a href="#" class="hover:text-white transition">FAQs</a></li>
+          <li>
+            <a href="#" class="hover:text-white transition">{{
+              'FOOTER.CONTACT_US' | translate
+            }}</a>
+          </li>
+          <li>
+            <a href="#" class="hover:text-white transition">{{
+              'FOOTER.TRACK_ORDER' | translate
+            }}</a>
+          </li>
+          <li>
+            <a href="#" class="hover:text-white transition">{{
+              'FOOTER.SHIPPING_DELIVERY' | translate
+            }}</a>
+          </li>
+          <li>
+            <a href="#" class="hover:text-white transition">{{
+              'FOOTER.RETURNS_EXCHANGES' | translate
+            }}</a>
+          </li>
+          <li>
+            <a href="#" class="hover:text-white transition">{{ 'FOOTER.FAQS' | translate }}</a>
+          </li>
         </ul>
       </div>
 
       <!-- العمود الرابع: النشرة البريدية -->
       <div>
-        <h3 class="text-white font-bold text-base mb-4 tracking-wide">Newsletter</h3>
+        <h3 class="text-white font-bold text-base mb-4 tracking-wide">
+          {{ 'FOOTER.NEWSLETTER_TITLE' | translate }}
+        </h3>
         <p class="text-gray-400 text-xs mb-4 leading-relaxed">
-          Subscribe to get special offers, free giveaways, and once-in-a-lifetime deals.
+          {{ 'FOOTER.NEWSLETTER_DESC' | translate }}
         </p>
         <form class="flex flex-col space-y-2">
           <input
             type="email"
-            placeholder="Enter your email"
+            [placeholder]="'FOOTER.EMAIL_PLACEHOLDER' | translate"
             class="bg-gray-900 border border-gray-800 text-white text-sm rounded-lg px-4 py-2.5 focus:outline-none focus:border-white transition"
           />
           <button
             type="submit"
             class="bg-white hover:bg-gray-200 text-black font-bold text-sm py-2.5 rounded-lg transition"
           >
-            Subscribe
+            {{ 'FOOTER.SUBSCRIBE' | translate }}
           </button>
         </form>
       </div>
@@ -159,10 +194,10 @@
 
     <!-- 3. حقوق الطبع والنشر وطرق الدفع -->
     <div class="pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-      <p>&copy; 2026 Frisko Store. All rights reserved. Designed with passion.</p>
+      <p>{{ 'FOOTER.RIGHTS_RESERVED' | translate }}</p>
 
       <!-- أيقونات الدفع المقبولة -->
-      <div class="flex space-x-3 rtl:space-x-reverse mt-4 md:mt-0 text-xl text-gray-400">
+      <div class="flex space-x-3 mt-4 md:mt-0 text-xl text-gray-400">
         <i class="fa-brands fa-cc-visa" title="Visa"></i>
         <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
         <i class="fa-brands fa-cc-paypal" title="PayPal"></i>

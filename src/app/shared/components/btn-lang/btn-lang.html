@@ -1,0 +1,12 @@
+<div class="relative flex items-center gap-2 text-xs font-bold">
+  <select
+    #langSelect
+    (change)="change(langSelect.value)"
+    [value]="currentLang()"
+    class="bg-black text-white text-xs border border-gray-700 rounded-lg px-2 py-1 outline-none cursor-pointer"
+  >
+    <option value="tr">Türkçe</option>
+    <option value="ar">العربية</option>
+    <option value="en">English</option>
+  </select>
+</div>

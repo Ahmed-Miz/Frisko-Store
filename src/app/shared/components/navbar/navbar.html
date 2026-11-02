@@ -1,43 +1,17 @@
-<!-- 1. (Top Bar) -->
-<div class="bg-black text-white text-xs py-1.5 md:py-2 px-4 border-b border-gray-800">
-  <div class="max-w-screen-xl mx-auto flex flex-wrap justify-between items-center">
-    <div class="hidden md:flex items-center space-x-6 rtl:space-x-reverse">
-      <span class="flex items-center">
-        <i class="fa-solid fa-truck-fast text-white mr-2"></i> Free Shipping on Orders 500 EGP
-      </span>
-      <span class="flex items-center">
-        <i class="fa-solid fa-gift text-white mr-2"></i> New Arrivals Daily
-      </span>
-    </div>
-
-    <div
-      class="md:flex text-2xs md:text-xs items-center justify-between space-x-4 rtl:space-x-reverse"
-    >
-      <div class="flex justify-between items-center space-x-3 rtl:space-x-reverse">
-        <a href="tel:+18001234567" class="hover:text-gray-300 flex items-center">
-          <i class="fa-solid fa-phone mr-1"></i> (+90) 00905522267204
-        </a>
-        <span class="text-gray-600">|</span>
-        <a href="mailto:friskofashion@gmail.com" class="hover:text-gray-300 flex items-end">
-          <i class="fa-regular fa-envelope mr-1"></i> friskofashion@gmail.com
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- 2. Navbar الرئيسية -->
 <nav class="bg-white border-b border-gray-100 py-3 px-4 sticky top-0 z-50 shadow-xs">
   <div class="max-w-screen-xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
     <!-- Logo & Mobile Controls -->
     <div class="w-full flex items-center justify-between md:w-auto">
-      <a routerLink="/shop" class="flex items-center space-x-2 rtl:space-x-reverse">
+      <a routerLink="/shop" class="flex items-center space-x-2">
         <img
           src="/WhatsApp Image 2026-09-25 at 1.36.47 PM.jpeg"
           class="w-10 md:w-12 rounded-2xl"
           alt="Frisko"
         />
-        <span class="text-xl md:text-2xl font-black text-black tracking-tight">Frisko</span>
+        <span class="text-xl md:text-2xl font-black text-black tracking-tight">{{
+          'NAVBAR.LOGO' | translate
+        }}</span>
       </a>
 
       <div class="flex items-center space-x-2 rtl:space-x-reverse md:hidden">
@@ -67,7 +41,7 @@
         type="text"
         #mobileInput
         (keyup.enter)="onSearch(mobileInput.value)"
-        placeholder="Search for products..."
+        [placeholder]="'NAVBAR.SEARCH_PLACEHOLDER' | translate"
         class="w-full bg-gray-100 border border-gray-200 text-black text-sm rounded-full pl-9 pr-12 py-2.5 outline-none focus:border-black"
       />
       <button
@@ -90,7 +64,7 @@
             routerLinkActive="text-black font-black underline underline-offset-8"
             [routerLinkActiveOptions]="{ exact: true }"
             class="block py-2 text-gray-800 hover:text-black font-bold transition"
-            >Home</a
+            >{{ 'NAVBAR.HOME' | translate }}</a
           >
         </li>
         <li>
@@ -99,7 +73,7 @@
             routerLinkActive="text-black font-black underline underline-offset-8"
             [routerLinkActiveOptions]="{ exact: true }"
             class="block py-2 text-gray-800 hover:text-black font-bold transition"
-            >Shop</a
+            >{{ 'NAVBAR.SHOP' | translate }}</a
           >
         </li>
 
@@ -134,15 +108,21 @@
                     [queryParams]="{ slug: category.slug }"
                     class="text-[11px] text-gray-400 hover:text-black transition font-semibold"
                   >
-                    View All &rarr;
+                    {{ 'NAVBAR.VIEW_ALL' | translate }} &rarr;
                   </a>
                 </div>
 
                 <ul class="space-y-2" dir="rtl">
                   @for (sub of category.children; track sub.id || sub.slug) {
-                    <li class="flex">
-                      <div class="size-10 rounded-full border-amber-400 bg-amber-600">
-                        <img [src]="sub.image_url" class="w-100" [alt]="sub.name" />
+                    <li class="flex items-center gap-3">
+                      <div
+                        class="size-10 rounded-full border border-gray-200 overflow-hidden bg-gray-50 flex-shrink-0"
+                      >
+                        <img
+                          [src]="sub.image_url"
+                          class="w-full h-full object-cover"
+                          [alt]="sub.name"
+                        />
                       </div>
                       <a
                         [routerLink]="['/shop']"
@@ -160,11 +140,15 @@
         }
 
         <!-- Actions -->
-        <div class="flex items-center space-x-4 rtl:space-x-reverse pt-1">
-          <a routerLink="/wishlist" class="text-black hover:text-gray-600 text-xl">
+        <div class="flex items-center space-x-4 pt-1">
+          <a routerLink="/wishlist" class="text-black hover:text-gray-600 text-xl" title="Wishlist">
             <i class="fa-regular fa-heart"></i>
           </a>
-          <a routerLink="/cart" class="text-black hover:text-gray-600 text-xl relative p-1">
+          <a
+            routerLink="/cart"
+            class="text-black hover:text-gray-600 text-xl relative p-1"
+            title="Cart"
+          >
             <i class="fa-solid fa-cart-shopping"></i>
           </a>
 
@@ -173,16 +157,17 @@
               (click)="logout()"
               class="bg-black hover:bg-gray-800 text-white font-bold text-xs px-5 py-2 rounded-full transition cursor-pointer"
             >
-              Sign Out
+              {{ 'NAVBAR.SIGN_OUT' | translate }}
             </button>
           } @else {
             <a
               routerLink="/auth/login"
               class="bg-black hover:bg-gray-800 text-white font-bold text-xs px-5 py-2 rounded-full transition"
             >
-              Sign In
+              {{ 'NAVBAR.SIGN_IN' | translate }}
             </a>
           }
+          <btnLang></btnLang>
         </div>
       </ul>
     </div>
@@ -194,7 +179,7 @@
           type="text"
           #desktopInput
           (keyup.enter)="onSearch(desktopInput.value)"
-          placeholder="Search for products..."
+          [placeholder]="'NAVBAR.SEARCH_PLACEHOLDER' | translate"
           class="w-full bg-gray-100 border border-gray-200 text-black text-sm rounded-full pl-4 pr-12 py-2.5 focus:border-black outline-none transition"
         />
         <button
@@ -209,7 +194,7 @@
   </div>
 </nav>
 
-<!-- ==================== Mobile Off-Canvas Sidebar & Accordion Subcategories ==================== -->
+<!-- ==================== Mobile Off-Canvas Sidebar ==================== -->
 <div
   (click)="closeMenu()"
   [ngClass]="{
@@ -239,8 +224,11 @@
           class="w-10 rounded-xl"
           alt="Frisko"
         />
-        <span class="text-xl font-black text-black tracking-tight">Frisko</span>
+        <span class="text-xl font-black text-black tracking-tight">{{
+          'NAVBAR.LOGO' | translate
+        }}</span>
       </a>
+      <btnLang></btnLang>
       <button
         (click)="closeMenu()"
         class="w-9 h-9 rounded-full bg-gray-100 text-black hover:bg-black hover:text-white transition flex items-center justify-center cursor-pointer"
@@ -257,7 +245,7 @@
           (click)="closeMenu()"
           class="block py-2 hover:text-gray-600 transition"
         >
-          Home
+          {{ 'NAVBAR.HOME' | translate }}
         </a>
       </li>
       <li>
@@ -266,7 +254,7 @@
           (click)="closeMenu()"
           class="block py-2 hover:text-gray-600 transition"
         >
-          Shop
+          {{ 'NAVBAR.SHOP' | translate }}
         </a>
       </li>
 
@@ -306,9 +294,15 @@
               dir="rtl"
             >
               @for (sub of category.children; track sub.id || sub.slug) {
-                <li class="flex gap-3">
-                  <div class="size-10 rounded-full border-amber-400 bg-amber-600">
-                    <img [src]="sub.image_url" class="w-100" [alt]="sub.name" />
+                <li class="flex items-center gap-3">
+                  <div
+                    class="size-8 rounded-full border border-gray-200 overflow-hidden bg-gray-50 flex-shrink-0"
+                  >
+                    <img
+                      [src]="sub.image_url"
+                      class="w-full h-full object-cover"
+                      [alt]="sub.name"
+                    />
                   </div>
                   <a
                     [routerLink]="['/shop']"
@@ -316,7 +310,7 @@
                     (click)="closeMenu()"
                     class="block py-1 text-gray-600 hover:text-black transition"
                   >
-                    {{ sub.name }}•
+                    {{ sub.name }}
                   </a>
                 </li>
               }
@@ -331,7 +325,7 @@
           (click)="closeMenu()"
           class="flex items-center justify-between py-2 text-gray-900 hover:text-gray-600 transition"
         >
-          <span>Wishlist</span>
+          <span>{{ 'NAVBAR.WISHLIST' | translate }}</span>
           <i class="fa-regular fa-heart text-lg"></i>
         </a>
       </li>
@@ -346,7 +340,7 @@
         class="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition cursor-pointer"
       >
         <i class="fa-solid fa-right-from-bracket"></i>
-        <span>Sign Out</span>
+        <span>{{ 'NAVBAR.SIGN_OUT' | translate }}</span>
       </button>
     } @else {
       <a
@@ -355,7 +349,7 @@
         class="w-full bg-black hover:bg-gray-800 text-white font-bold py-3 px-4 rounded-xl flex items-center justify-center gap-2 transition text-center"
       >
         <i class="fa-regular fa-user"></i>
-        <span>Sign In</span>
+        <span>{{ 'NAVBAR.SIGN_IN' | translate }}</span>
       </a>
     }
   </div>

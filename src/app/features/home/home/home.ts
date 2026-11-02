@@ -4,10 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { Shome } from '../../../core/services/shome';
 import { Icategories } from '../../../core/models/icategories';
 import { IlatestProducts } from '../../../core/models/ilatest-products';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
-  imports: [Slider, RouterLink],
+  imports: [Slider, RouterLink, TranslatePipe],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

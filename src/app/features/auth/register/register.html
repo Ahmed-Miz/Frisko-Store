@@ -5,11 +5,17 @@
       <div
         class="w-12 h-12 rounded-full flex items-center justify-center text-2xl font-bold shadow-md"
       >
-        <img src="/WhatsApp Image 2026-09-25 at 1.36.47 PM.jpeg" class="w-12 rounded-2xl" />
+        <img
+          src="/WhatsApp Image 2026-09-25 at 1.36.47 PM.jpeg"
+          class="w-12 rounded-2xl"
+          alt="Frisko"
+        />
       </div>
     </a>
-    <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Create an Account</h2>
-    <p class="mt-2 text-sm text-gray-600">Join Frisko and discover the latest trends</p>
+    <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">
+      {{ 'AUTH.REGISTER_TITLE' | translate }}
+    </h2>
+    <p class="mt-2 text-sm text-gray-600">{{ 'AUTH.REGISTER_SUBTITLE' | translate }}</p>
   </div>
 
   <!-- صندوق الفورم -->
@@ -18,10 +24,12 @@
       <form [formGroup]="registerForm" (ngSubmit)="submitForm()" class="space-y-5">
         <!-- الاسم بالكامل -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Full Name</label>
+          <label class="block text-sm font-medium text-gray-700">{{
+            'AUTH.FULL_NAME_LABEL' | translate
+          }}</label>
           <div class="mt-1 relative rounded-md shadow-sm">
             <div
-              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+              class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none text-gray-400"
             >
               <i class="fa-solid fa-user"></i>
             </div>
@@ -29,17 +37,17 @@
               formControlName="name"
               type="text"
               required
-              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
-              placeholder="John Doe"
+              class="block w-full ps-10 pe-3 py-3 border border-gray-300 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:bg-dark focus:border-green-500 text-sm"
+              [placeholder]="'AUTH.FULL_NAME_PLACEHOLDER' | translate"
             />
           </div>
           @if (registerForm.get('name')?.touched && registerForm.get('name')?.invalid) {
             <div class="text-red-500 text-sm mt-1">
               @if (registerForm.get('name')?.hasError('required')) {
-                <span>Name is required.</span>
+                <span>{{ 'AUTH.FULL_NAME_REQUIRED' | translate }}</span>
               }
               @if (registerForm.get('name')?.hasError('minlength')) {
-                <span>Name must be at least 3 characters long.</span>
+                <span>{{ 'AUTH.FULL_NAME_MINLENGTH' | translate }}</span>
               }
             </div>
           }
@@ -47,10 +55,12 @@
 
         <!-- البريد الإلكتروني -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Email address</label>
+          <label class="block text-sm font-medium text-gray-700">{{
+            'AUTH.EMAIL_LABEL' | translate
+          }}</label>
           <div class="mt-1 relative rounded-md shadow-sm">
             <div
-              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+              class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none text-gray-400"
             >
               <i class="fa-solid fa-envelope"></i>
             </div>
@@ -58,17 +68,17 @@
               formControlName="email"
               type="email"
               required
-              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
-              placeholder="name@example.com"
+              class="block w-full ps-10 pe-3 py-3 border border-gray-300 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:bg-dark focus:border-green-500 text-sm"
+              [placeholder]="'AUTH.EMAIL_PLACEHOLDER' | translate"
             />
           </div>
           @if (registerForm.get('email')?.touched && registerForm.get('email')?.invalid) {
             <div class="text-red-500 text-sm mt-1">
               @if (registerForm.get('email')?.hasError('required')) {
-                <span>Email is required.</span>
+                <span>{{ 'AUTH.EMAIL_REQUIRED' | translate }}</span>
               }
               @if (registerForm.get('email')?.hasError('email')) {
-                <span>Please enter a valid email address.</span>
+                <span>{{ 'AUTH.EMAIL_INVALID' | translate }}</span>
               }
             </div>
           }
@@ -76,10 +86,12 @@
 
         <!-- كلمة المرور -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Password</label>
+          <label class="block text-sm font-medium text-gray-700">{{
+            'AUTH.PASSWORD_LABEL' | translate
+          }}</label>
           <div class="mt-1 relative rounded-md shadow-sm">
             <div
-              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+              class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none text-gray-400"
             >
               <i class="fa-solid fa-lock"></i>
             </div>
@@ -87,15 +99,15 @@
               formControlName="password"
               type="password"
               required
-              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
-              placeholder="••••••••"
+              class="block w-full ps-10 pe-3 py-3 border border-gray-300 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:bg-dark focus:border-green-500 text-sm"
+              [placeholder]="'AUTH.PASSWORD_PLACEHOLDER' | translate"
             />
           </div>
           @if (registerForm.get('password')?.touched && registerForm.get('password')?.invalid) {
             <div
               class="bg-red-50 border border-red-200 p-3 rounded text-red-700 text-sm mt-2 space-y-1"
             >
-              <p class="font-bold">Ensure that these requirements are met:</p>
+              <p class="font-bold">{{ 'AUTH.PASSWORD_RULES_TITLE' | translate }}</p>
               <ul class="list-disc list-inside space-y-0.5">
                 <li
                   [class.text-green-600]="
@@ -103,25 +115,27 @@
                     !registerForm.get('password')?.hasError('maxlength')
                   "
                 >
-                  At least 10 characters (and up to 100 characters)
+                  {{ 'AUTH.RULE_LENGTH' | translate }}
                 </li>
                 <li [class.text-green-600]="!registerForm.get('password')?.hasError('pattern')">
-                  At least one lowercase character
+                  {{ 'AUTH.RULE_LOWERCASE' | translate }}
                 </li>
                 <li [class.text-green-600]="!registerForm.get('password')?.hasError('pattern')">
-                  Inclusion of at least one special character, e.g., ! @ # ?
+                  {{ 'AUTH.RULE_SPECIAL' | translate }}
                 </li>
               </ul>
             </div>
           }
         </div>
 
-        <!-- phone-->
+        <!-- الهاتف -->
         <div>
-          <label class="block text-sm font-medium text-gray-700">Phone Namber</label>
+          <label class="block text-sm font-medium text-gray-700">{{
+            'AUTH.PHONE_LABEL' | translate
+          }}</label>
           <div class="mt-1 relative rounded-md shadow-sm">
             <div
-              class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400"
+              class="absolute inset-y-0 start-0 ps-3 flex items-center pointer-events-none text-gray-400"
             >
               <i class="fa-solid fa-phone"></i>
             </div>
@@ -129,8 +143,8 @@
               formControlName="phone"
               type="tel"
               required
-              class="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm"
-              placeholder="Phon Namber"
+              class="block w-full ps-10 pe-3 py-3 border border-gray-300 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:bg-dark focus:border-green-500 text-sm"
+              [placeholder]="'AUTH.PHONE_PLACEHOLDER' | translate"
             />
           </div>
         </div>
@@ -139,9 +153,9 @@
         <div class="pt-2">
           <button
             type="submit"
-            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition duration-200"
+            class="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-bold text-white bg-dark hover:bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:bg-dark transition duration-200 cursor-pointer"
           >
-            Sign Up
+            {{ 'AUTH.SIGN_UP' | translate }}
           </button>
         </div>
       </form>
@@ -149,11 +163,11 @@
       <!-- الانتقال لصفحة تسجيل الدخول لو عنده حساب مسبقاً -->
       <div class="mt-6 text-center">
         <p class="text-sm text-gray-600">
-          Already have an account?
+          {{ 'AUTH.ALREADY_HAVE_ACCOUNT' | translate }}
           <a
             routerLink="/auth/login"
-            class="cursor-pointer font-bold text-green-600 hover:text-green-500 ml-1"
-            >Sign In</a
+            class="cursor-pointer font-bold text-dark hover:text-black ms-1"
+            >{{ 'AUTH.SIGN_IN' | translate }}</a
           >
         </p>
       </div>

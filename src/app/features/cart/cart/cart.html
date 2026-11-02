@@ -2,8 +2,10 @@
   <div class="max-w-screen-xl mx-auto px-4">
     <!-- عنوان الصفحة -->
     <div class="mb-8">
-      <h1 class="text-2xl md:text-3xl font-black text-black tracking-tight">Shopping Cart</h1>
-      <p class="text-sm text-gray-500 mt-1">Review your items and complete your secure payment.</p>
+      <h1 class="text-2xl md:text-3xl font-black text-black tracking-tight">
+        {{ 'CART.TITLE' | translate }}
+      </h1>
+      <p class="text-sm text-gray-500 mt-1">{{ 'CART.SUBTITLE' | translate }}</p>
     </div>
 
     <!-- شبكة المحتوى -->
@@ -32,7 +34,9 @@
                   }}
                 </h3>
                 <span class="text-black font-black text-base mt-1 block">
-                  <span class="text-2xs font-normal text-gray-500 mr-1">TRY</span
+                  <span class="text-2xs font-normal text-gray-500 me-1">{{
+                    'CART.CURRENCY' | translate
+                  }}</span
                   >{{ cartItem.price || cartItem.product?.price }}
                 </span>
               </div>
@@ -43,14 +47,14 @@
               <div class="flex items-center border border-gray-300 rounded-xl bg-gray-50 p-0.5">
                 <button
                   (click)="decreaseQuantity(cartItem.product?.id || cartItem.id)"
-                  class="w-8 h-8 rounded-lg bg-white text-black font-extrabold shadow-sm hover:bg-black hover:text-white transition flex items-center justify-center"
+                  class="w-8 h-8 rounded-lg bg-white text-black font-extrabold shadow-sm hover:bg-black hover:text-white transition flex items-center justify-center cursor-pointer"
                 >
                   -
                 </button>
                 <span class="px-4 text-sm font-black text-black">{{ cartItem.quantity }}</span>
                 <button
                   (click)="increaseQuantity(cartItem.product?.id || cartItem.id)"
-                  class="w-8 h-8 rounded-lg bg-white text-black font-extrabold shadow-sm hover:bg-black hover:text-white transition flex items-center justify-center"
+                  class="w-8 h-8 rounded-lg bg-white text-black font-extrabold shadow-sm hover:bg-black hover:text-white transition flex items-center justify-center cursor-pointer"
                 >
                   +
                 </button>
@@ -58,8 +62,8 @@
 
               <button
                 (click)="removeItem(cartItem.product?.id || cartItem.id)"
-                class="text-red-500 hover:text-red-600 transition p-2"
-                title="Remove item"
+                class="text-red-500 hover:text-red-600 transition p-2 cursor-pointer"
+                [title]="'CART.REMOVE_TITLE' | translate"
               >
                 <i class="fa-solid fa-trash-can text-base"></i>
               </button>
@@ -68,12 +72,12 @@
         } @empty {
           <div class="bg-white rounded-2xl p-12 text-center border border-gray-100">
             <i class="fa-solid fa-cart-flatbed text-4xl text-gray-300 mb-3"></i>
-            <p class="text-gray-500 font-bold text-lg mb-4">سلتك فارغة حالياً</p>
+            <p class="text-gray-500 font-bold text-lg mb-4">{{ 'CART.EMPTY_TITLE' | translate }}</p>
             <a
               routerLink="/shop"
               class="bg-black text-white px-6 py-3 rounded-xl font-bold text-sm inline-block hover:bg-gray-800 transition"
             >
-              تصفح المنتجات
+              {{ 'CART.BROWSE_PRODUCTS' | translate }}
             </a>
           </div>
         }
@@ -85,25 +89,30 @@
           <h2
             class="text-lg font-black text-black mb-4 pb-3 border-b border-gray-100 tracking-tight"
           >
-            Order Summary
+            {{ 'CART.ORDER_SUMMARY' | translate }}
           </h2>
 
           <!-- تفاصيل الحسابات -->
           <div class="space-y-3.5 text-sm text-gray-600 mb-6">
             <div class="flex justify-between">
-              <span>Subtotal</span>
-              <span class="font-bold text-black">{{ totalQuantity() }} قطع</span>
+              <span>{{ 'CART.SUBTOTAL' | translate }}</span>
+              <span class="font-bold text-black"
+                >{{ totalQuantity() }} {{ 'CART.ITEMS_COUNT' | translate }}</span
+              >
             </div>
             <div class="flex justify-between">
-              <span>Shipping Fee</span>
-              <span class="font-bold text-black">Free</span>
+              <span>{{ 'CART.SHIPPING_FEE' | translate }}</span>
+              <span class="font-bold text-black">{{ 'CART.FREE_SHIPPING' | translate }}</span>
             </div>
             <div
               class="flex justify-between text-base font-black text-black pt-4 border-t border-gray-100"
             >
-              <span>Total Amount</span>
+              <span>{{ 'CART.TOTAL_AMOUNT' | translate }}</span>
               <span class="text-black text-lg">
-                <span class="text-2xs font-normal text-gray-500 mr-1">TRY</span>{{ subtotal() }}
+                <span class="text-2xs font-normal text-gray-500 me-1">{{
+                  'CART.CURRENCY' | translate
+                }}</span
+                >{{ subtotal() }}
               </span>
             </div>
           </div>
@@ -114,15 +123,15 @@
             class="w-full bg-black hover:bg-gray-800 text-white font-black py-4 px-4 rounded-xl shadow-lg transition duration-200 flex items-center justify-center space-x-2 rtl:space-x-reverse cursor-pointer"
           >
             <i class="fa-solid fa-lock text-xs"></i>
-            <span>Proceed to Checkout</span>
+            <span>{{ 'CART.PROCEED_CHECKOUT' | translate }}</span>
           </button>
 
           <!-- ملاحظة الأمان -->
           <p
-            class="text-center text-xs text-gray-400 mt-4 flex items-center justify-center space-x-1"
+            class="text-center text-xs text-gray-400 mt-4 flex items-center justify-center space-x-1 rtl:space-x-reverse"
           >
-            <i class="fa-solid fa-shield-halved text-black mr-1"></i>
-            <span>Secure 256-bit SSL encrypted checkout</span>
+            <i class="fa-solid fa-shield-halved text-black me-1"></i>
+            <span>{{ 'CART.SECURE_CHECKOUT_NOTE' | translate }}</span>
           </p>
         </div>
       </div>
